@@ -1,317 +1,828 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Umbry Services — Designer Products for Less</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasy's Services – Designer Shop</title>
+    <style>
+        :root {
+            --neon-blue: #00eaff;
+            --neon-green: #00ff6a;
+            --neon-yellow: #ffe600;
+            --bg-dark: #050509;
+        }
 
-<style>
-/* GLOBAL */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
-  color: #fff;
-  cursor: none;
-  scroll-behavior: smooth;
-}
+        * {
+            box-sizing: border-box;
+            transition: 0.25s ease;
+        }
 
-/* Custom cursor */
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: #fff;
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-}
+        body {
+            margin: 0;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top, #101020 0, #020208 45%, #000000 100%);
+            color: #f5f5f5;
+        }
 
-/* Fade + slide animations */
-.fade { opacity: 0; animation: fadeIn 1s forwards; }
-@keyframes fadeIn { to { opacity: 1; } }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050509;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--neon-blue), var(--neon-green));
+            border-radius: 4px;
+        }
 
-.slide { opacity: 0; transform: translateY(20px); animation: slideUp 1s forwards; }
-@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        /* Header / Nav */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 234, 255, 0.4);
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.25);
+        }
 
-/* NAVBAR */
-header {
-  background: #111;
-  padding: 15px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #222;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-nav a {
-  margin-left: 20px;
-  color: #bbb;
-  text-decoration: none;
-  font-size: 15px;
-  transition: 0.2s;
-}
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: radial-gradient(circle at 30% 0, var(--neon-yellow), var(--neon-green));
+            box-shadow: 0 0 18px var(--neon-green);
+        }
 
-nav a:hover {
-  color: #fff;
-  text-shadow: 0 0 8px #fff;
-}
+        .logo-text {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            font-size: 18px;
+            text-transform: uppercase;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
 
-/* Discord icon */
-.discord {
-  width: 26px;
-  vertical-align: middle;
-  filter: brightness(0.7);
-  transition: 0.2s;
-}
+        nav a {
+            margin-left: 22px;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #d0d0d0;
+            position: relative;
+        }
 
-.discord:hover {
-  filter: brightness(1);
-  transform: scale(1.1);
-}
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-yellow));
+            box-shadow: 0 0 10px var(--neon-green);
+        }
 
-/* Homepage */
-#home {
-  padding: 100px 20px;
-  text-align: center;
-}
+        nav a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
 
-.category-btns {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+        nav a:hover::after {
+            width: 100%;
+        }
 
-.category-btn {
-  padding: 14px 28px;
-  background: #151515;
-  border: 1px solid #333;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.25s;
-}
+        .nav-cta {
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 255, 106, 0.7);
+            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.2), transparent 60%);
+            color: var(--neon-green);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            box-shadow: 0 0 14px rgba(0, 255, 106, 0.4);
+        }
 
-.category-btn:hover {
-  transform: translateY(-6px);
-  border-color: #555;
-  box-shadow: 0 0 15px rgba(255,255,255,0.1);
-}
+        .nav-cta:hover {
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-yellow));
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-green);
+        }
 
-/* Product pages */
-.page {
-  display: none;
-  padding: 50px 20px;
-  max-width: 1200px;
-  margin: auto;
-}
+        /* Hero */
+        .hero {
+            max-width: 1200px;
+            margin: 40px auto 20px;
+            padding: 0 24px 40px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+            gap: 40px;
+            align-items: center;
+        }
 
-.page h2 {
-  font-size: 32px;
-  margin-bottom: 20px;
-  border-left: 4px solid #444;
-  padding-left: 10px;
-}
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 234, 255, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #b0faff;
+        }
 
-/* Product grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
 
-.card {
-  background: #151515;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #222;
-  transition: 0.25s;
-  cursor: pointer;
-}
+        .hero-title {
+            margin-top: 18px;
+            font-size: clamp(32px, 4vw, 44px);
+            line-height: 1.1;
+            font-weight: 800;
+        }
 
-.card:hover {
-  transform: translateY(-8px) scale(1.03);
-  border-color: #555;
-  box-shadow: 0 0 20px rgba(255,255,255,0.08);
-}
+        .hero-title span {
+            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green), var(--neon-yellow));
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 18px rgba(0, 234, 255, 0.6);
+        }
 
-.card img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  transition: 0.3s;
-}
+        .hero-sub {
+            margin-top: 14px;
+            max-width: 420px;
+            font-size: 14px;
+            color: #b8b8c8;
+        }
 
-.card:hover img {
-  filter: brightness(1.15);
-}
+        .hero-actions {
+            margin-top: 24px;
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
 
-.back-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #222;
-  border: 1px solid #444;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+        .btn-primary {
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            background: linear-gradient(120deg, var(--neon-green), var(--neon-yellow));
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 106, 0.7);
+        }
 
-.back-btn:hover {
-  background: #333;
-}
-</style>
+        .btn-primary:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 0 26px rgba(255, 230, 0, 0.8);
+        }
+
+        .btn-ghost {
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 234, 255, 0.7);
+            background: transparent;
+            color: var(--neon-blue);
+            cursor: pointer;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+        }
+
+        .btn-ghost:hover {
+            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.18), transparent 60%);
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.6);
+        }
+
+        .hero-meta {
+            margin-top: 18px;
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #8a8aa0;
+        }
+
+        .hero-meta span strong {
+            color: var(--neon-yellow);
+        }
+
+        .hero-card {
+            position: relative;
+            border-radius: 22px;
+            padding: 18px;
+            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.2), transparent 55%),
+                        radial-gradient(circle at 100% 100%, rgba(0, 255, 106, 0.2), transparent 55%),
+                        #050509;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: conic-gradient(from 180deg, rgba(0, 234, 255, 0.2), rgba(0, 255, 106, 0.2), rgba(255, 230, 0, 0.2), transparent 60%);
+            opacity: 0.4;
+            filter: blur(40px);
+        }
+
+        .hero-card-inner {
+            position: relative;
+            border-radius: 18px;
+            padding: 18px;
+            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.18), transparent 60%),
+                        rgba(3, 3, 10, 0.96);
+            border: 1px solid rgba(0, 234, 255, 0.4);
+        }
+
+        .hero-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #9fdfff;
+            margin-bottom: 8px;
+        }
+
+        .hero-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .hero-card-title span {
+            color: var(--neon-green);
+        }
+
+        .hero-card-img {
+            margin-top: 10px;
+            border-radius: 14px;
+            height: 170px;
+            background-image: linear-gradient(135deg, rgba(0, 234, 255, 0.25), rgba(0, 255, 106, 0.25)),
+                              url("https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80");
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 26px rgba(0, 0, 0, 0.9);
+        }
+
+        .hero-card-footer {
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #a0a0b5;
+        }
+
+        .hero-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 230, 0, 0.7);
+            color: var(--neon-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+
+        /* Section base */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px 60px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: #e0e0f0;
+        }
+
+        .section-title span {
+            color: var(--neon-blue);
+        }
+
+        .section-sub {
+            font-size: 13px;
+            color: #9a9ab0;
+            max-width: 360px;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .category-pill {
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 234, 255, 0.4);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #c0f7ff;
+            cursor: pointer;
+        }
+
+        .category-pill.active {
+            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green));
+            color: #000;
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.7);
+            border-color: transparent;
+        }
+
+        .category-pill:hover:not(.active) {
+            background: rgba(0, 234, 255, 0.08);
+        }
+
+        /* Product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            position: relative;
+            border-radius: 18px;
+            padding: 12px;
+            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.12), transparent 60%),
+                        #050509;
+            border: 1px solid rgba(0, 234, 255, 0.25);
+            box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+        }
+
+        .product-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(0, 255, 106, 0.12));
+            opacity: 0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 26px rgba(0, 255, 106, 0.5);
+        }
+
+        .product-card:hover::after {
+            opacity: 1;
+        }
+
+        .product-img {
+            border-radius: 14px;
+            height: 190px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 10px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #8a8aa0;
+            margin-bottom: 6px;
+        }
+
+        .product-brand {
+            color: var(--neon-yellow);
+        }
+
+        .product-tag {
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 255, 106, 0.7);
+            color: var(--neon-green);
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .product-desc {
+            font-size: 12px;
+            color: #a8a8c0;
+            margin-bottom: 10px;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 106, 0.7);
+        }
+
+        .product-price span {
+            font-size: 11px;
+            color: #8a8aa0;
+            font-weight: 400;
+            text-shadow: none;
+        }
+
+        .product-btn {
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green));
+            color: #000;
+            box-shadow: 0 0 16px rgba(0, 234, 255, 0.7);
+        }
+
+        .product-btn:hover {
+            background: linear-gradient(120deg, var(--neon-green), var(--neon-yellow));
+            box-shadow: 0 0 20px rgba(0, 255, 106, 0.9);
+        }
+
+        /* About / Contact */
+        .two-col {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            border-radius: 18px;
+            padding: 20px;
+            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.12), transparent 60%),
+                        #050509;
+            border: 1px solid rgba(0, 234, 255, 0.25);
+            box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--neon-blue);
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #b0b0c5;
+        }
+
+        .about-list {
+            margin-top: 10px;
+            padding-left: 18px;
+            font-size: 13px;
+            color: #c0c0d5;
+        }
+
+        .about-list li {
+            margin-bottom: 6px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            border-radius: 10px;
+            border: 1px solid rgba(0, 234, 255, 0.4);
+            background: #050509;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #f5f5f5;
+            box-shadow: 0 0 12px rgba(0, 234, 255, 0.25);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.7);
+        }
+
+        .contact-form button {
+            align-self: flex-start;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            background: linear-gradient(120deg, var(--neon-green), var(--neon-yellow));
+            color: #000;
+            box-shadow: 0 0 18px rgba(0, 255, 106, 0.8);
+        }
+
+        .contact-form button:hover {
+            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green));
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(0, 234, 255, 0.4);
+            margin-top: 40px;
+            padding: 18px 24px 26px;
+            text-align: center;
+            font-size: 11px;
+            color: #8a8aa0;
+            background: #020208;
+        }
+
+        footer span {
+            color: var(--neon-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .hero-card {
+                order: -1;
+            }
+            .two-col {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .nav-inner {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-inner {
+                justify-content: space-between;
+            }
+            nav {
+                display: none;
+            }
+            .hero {
+                margin-top: 24px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- Custom cursor -->
-<div class="cursor-dot" id="cursor"></div>
-<script>
-document.addEventListener("mousemove", e => {
-  const c = document.getElementById("cursor");
-  c.style.left = e.clientX + "px";
-  c.style.top = e.clientY + "px";
-});
-</script>
-
 <header>
-  <div class="logo">Umbry Services</div>
-
-  <nav>
-    <a href="#" onclick="showPage('home')">Home</a>
-    <a href="#" onclick="showPage('hoodies')">Hoodies</a>
-    <a href="#" onclick="showPage('shoes')">Shoes</a>
-    <a href="#" onclick="showPage('accessories')">Accessories</a>
-    <a href="#" onclick="showPage('jackets')">Jackets</a>
-    <a href="#" onclick="showPage('bags')">Bags</a>
-
-    <a href="https://discord.gg/ANZJU9e9m9" target="_blank">
-      <img class="discord" src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg">
-    </a>
-  </nav>
+    <div class="nav-inner">
+        <div class="logo">
+            <div class="logo-mark"></div>
+            <div class="logo-text">Rasy's Services</div>
+        </div>
+        <nav>
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <button class="nav-cta">New Drops</button>
+        </nav>
+    </div>
 </header>
 
-<!-- HOMEPAGE -->
-<div id="home" class="fade">
-  <h1 class="slide">Welcome to Umbry Services</h1>
-  <p class="slide">Premium designer fashion for less.</p>
+<section class="hero">
+    <div>
+        <div class="hero-badge">
+            <div class="hero-badge-dot"></div>
+            Designer pieces • Low prices
+        </div>
+        <h1 class="hero-title">
+            Smooth <span>neon‑driven</span> designer shop for your next fit.
+        </h1>
+        <p class="hero-sub">
+            Curated designer clothing with a clean, gaming‑inspired neon look. Jackets, sneakers, tees and more—priced to move fast.
+        </p>
+        <div class="hero-actions">
+            <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+                Browse collection
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+                Request a piece
+            </button>
+        </div>
+        <div class="hero-meta">
+            <span><strong>24/7</strong> online</span>
+            <span><strong>Fast</strong> replies</span>
+            <span><strong>Trusted</strong> deals</span>
+        </div>
+    </div>
 
-  <div class="category-btns fade">
-    <button class="category-btn" onclick="showPage('hoodies')">Hoodies</button>
-    <button class="category-btn" onclick="showPage('shoes')">Shoes</button>
-    <button class="category-btn" onclick="showPage('accessories')">Accessories</button>
-    <button class="category-btn" onclick="showPage('jackets')">Jackets</button>
-    <button class="category-btn" onclick="showPage('bags')">Bags</button>
-  </div>
-</div>
+    <div class="hero-card">
+        <div class="hero-card-inner">
+            <div class="hero-tag">Featured drop</div>
+            <div class="hero-card-title">
+                Neon‑lined <span>designer jacket</span> • Limited stock
+            </div>
+            <div class="hero-card-img"></div>
+            <div class="hero-card-footer">
+                <div>
+                    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.16em; color:#8a8aa0;">
+                        Starting at
+                    </div>
+                    <div style="font-size:18px; font-weight:700; color:var(--neon-green); text-shadow:0 0 12px rgba(0,255,106,0.8);">
+                        €89
+                    </div>
+                </div>
+                <div class="hero-pill">Street • Luxury</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!-- HOODIES PAGE -->
-<div id="hoodies" class="page fade">
-  <h2>Hoodies</h2>
-  <div class="grid">
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Designer Hoodie A</h3>
-      <p>£49.99</p>
+<section id="shop" class="section">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Shop <span>Designer</span></div>
+            <p class="section-sub">
+                Hand‑picked designer clothing with a neon‑smooth aesthetic. Mix of streetwear, luxury basics and statement pieces.
+            </p>
+        </div>
     </div>
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Designer Hoodie B</h3>
-      <p>£59.99</p>
-    </div>
-  </div>
-  <button class="back-btn" onclick="showPage('home')">← Back</button>
-</div>
 
-<!-- SHOES PAGE -->
-<div id="shoes" class="page fade">
-  <h2>Shoes</h2>
-  <div class="grid">
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Luxury Sneakers</h3>
-      <p>£79.99</p>
+    <div class="categories">
+        <button class="category-pill active">All</button>
+        <button class="category-pill">Jackets</button>
+        <button class="category-pill">Sneakers</button>
+        <button class="category-pill">Tees</button>
+        <button class="category-pill">Accessories</button>
     </div>
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Designer Runners</h3>
-      <p>£89.99</p>
-    </div>
-  </div>
-  <button class="back-btn" onclick="showPage('home')">← Back</button>
-</div>
 
-<!-- ACCESSORIES PAGE -->
-<div id="accessories" class="page fade">
-  <h2>Accessories</h2>
-  <div class="grid">
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Premium Cap</h3>
-      <p>£19.99</p>
-    </div>
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Designer Belt</h3>
-      <p>£29.99</p>
-    </div>
-  </div>
-  <button class="back-btn" onclick="showPage('home')">← Back</button>
-</div>
+    <div class="product-grid">
+        <article class="product-card">
+            <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="product-meta">
+                <span class="product-brand">Off‑White style</span>
+                <span class="product-tag">Jacket</span>
+            </div>
+            <div class="product-name">Neon‑lined black bomber</div>
+            <div class="product-desc">Clean black shell with subtle neon piping—perfect for night city fits.</div>
+            <div class="product-bottom">
+                <div class="product-price">€89 <span>incl. VAT</span></div>
+                <button class="product-btn">Add to list</button>
+            </div>
+        </article>
 
-<!-- JACKETS PAGE -->
-<div id="jackets" class="page fade">
-  <h2>Jackets</h2>
-  <div class="grid">
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Windbreaker</h3>
-      <p>£69.99</p>
-    </div>
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Designer Puffer</h3>
-      <p>£99.99</p>
-    </div>
-  </div>
-  <button class="back-btn" onclick="showPage('home')">← Back</button>
-</div>
+        <article class="product-card">
+            <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="product-meta">
+                <span class="product-brand">Street luxe</span>
+                <span class="product-tag">Sneakers</span>
+            </div>
+            <div class="product-name">Glow‑accent white sneakers</div>
+            <div class="product-desc">Minimal white base with neon blue and green accents that pop under lights.</div>
+            <div class="product-bottom">
+                <div class="product-price">€79 <span>incl. VAT</span></div>
+                <button class="product-btn">Add to list</button>
+            </div>
+        </article>
 
-<!-- BAGS PAGE -->
-<div id="bags" class="page fade">
-  <h2>Bags</h2>
-  <div class="grid">
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Crossbody Bag</h3>
-      <p>£39.99</p>
-    </div>
-    <div class="card slide">
-      <img src="https://via.placeholder.com/300x200">
-      <h3>Luxury Backpack</h3>
-      <p>£59.99</p>
-    </div>
-  </div>
-  <button class="back-btn" onclick="showPage('home')">← Back</button>
-</div>
+        <article class="product-card">
+            <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="product-meta">
+                <span class="product-brand">Graphic</span>
+                <span class="product-tag">T‑shirt</span>
+            </div>
+            <div class="product-name">Blue neon logo tee</div>
+            <div class="product-desc">Soft cotton tee with a bold neon logo print—simple but loud.</div>
+            <div class="product-bottom">
+                <div class="product-price">€39 <span>incl. VAT</span></div>
+                <button class="product-btn">Add to list</button>
+            </div>
+        </article>
 
-<script>
-function showPage(page) {
-  document.querySelectorAll(".page, #home").forEach(p => p.style.display = "none");
-  document.getElementById(page).style.display = "block";
-}
-</script>
+        <article class="product-card">
+            <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80');"></div>
+            <div class="product-meta">
+                <span class="product-brand">Capsule</span>
+                <span class="product-tag">Hoodie</span>
+            </div>
+            <div class="product-name">Yellow neon hoodie</div>
+            <div class="product-desc">Oversized hoodie with yellow neon drawstrings and subtle chest print.</div>
+            <div class="product-bottom">
+                <div class="product-price">€59 <span>incl. VAT</span></div>
+                <button class="product-btn">Add to list</button>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <div class="two-col">
+        <div class="card">
+            <h3>About the shop</h3>
+            <p>
+                Rasy's Services focuses on designer‑style clothing with a smooth, neon‑inspired aesthetic.  
+                Think late‑night city lights, gaming overlays and clean silhouettes—all at accessible prices.
+            </p>
+            <ul class="about-list">
+                <li>Curated drops instead of endless scrolling.</li>
+                <li>Designer‑style fits with a modern, digital look.</li>
+                <li>Clear communication on sizing and condition.</li>
+                <li>Fast responses for questions and custom requests.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>How it works</h3>
+            <p>
+                Pick the pieces you like, send your list through the contact form, and you’ll get a quick reply with availability and details.
+            </p>
+            <ul class="about-list">
+                <li>Browse the collection and note the items you want.</li>
+                <li>Use the “Add to list” buttons as a reminder for yourself.</li>
+                <li>Send your list, size and location via the form below.</li>
+                <li>Get a reply with final pricing and next steps.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <div class="two-col">
+        <div class="card">
+            <h3>Contact</h3>
+            <p>
+                Ready to lock in a fit or ask about a specific piece?  
+                Drop your details and I’ll get back to you quickly.
+            </p>
+            <form class="contact-form">
+                <input type="text" placeholder="Your name">
+                <input type="email" placeholder="Email">
+                <textarea rows="4" placeholder="What items are you interested in? (Names, sizes, budget)"></textarea>
+                <button type="button">Send message</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Quick info</h3>
+            <p><strong style="color:var(--neon-green);">Location:</strong> Online‑based, EU‑friendly shipping.</p>
+            <p><strong style="color:var(--neon-blue);">Response time:</strong> Usually within a few hours.</p>
+            <p><strong style="color:var(--neon-yellow);">Tip:</strong> Include your size and budget so I can suggest the best pieces for you.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © <span>Rasy's Services</span> — Designer‑style clothing in neon smooth fashion.
+</footer>
 
 </body>
 </html>
