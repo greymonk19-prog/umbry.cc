@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rasy's Services – Designer Shop</title>
+    <title>Umbry Services – Designer Shop</title>
+
     <style>
         :root {
-            --neon-blue: #00eaff;
-            --neon-green: #00ff6a;
-            --neon-yellow: #ffe600;
-            --bg-dark: #050509;
+            --white: #ffffff;
+            --light-gray: #dcdcdc;
+            --gray: #9a9a9a;
+            --dark-gray: #1a1a1a;
+            --black: #000000;
         }
 
         * {
@@ -19,32 +21,27 @@
 
         body {
             margin: 0;
-            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-            background: radial-gradient(circle at top, #101020 0, #020208 45%, #000000 100%);
-            color: #f5f5f5;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            background: radial-gradient(circle at top, #111 0, #000 60%);
+            color: var(--white);
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050509;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--neon-blue), var(--neon-green));
+            background: #444;
             border-radius: 4px;
         }
 
-        /* Header / Nav */
+        /* Header */
         header {
             position: sticky;
             top: 0;
             z-index: 20;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 234, 255, 0.4);
-            box-shadow: 0 0 18px rgba(0, 234, 255, 0.25);
+            border-bottom: 1px solid #444;
         }
 
         .nav-inner {
@@ -65,9 +62,8 @@
         .logo-mark {
             width: 32px;
             height: 32px;
-            border-radius: 10px;
-            background: radial-gradient(circle at 30% 0, var(--neon-yellow), var(--neon-green));
-            box-shadow: 0 0 18px var(--neon-green);
+            border-radius: 8px;
+            background: #fff;
         }
 
         .logo-text {
@@ -75,8 +71,7 @@
             letter-spacing: 0.08em;
             font-size: 18px;
             text-transform: uppercase;
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
+            color: var(--white);
         }
 
         nav a {
@@ -85,46 +80,25 @@
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: #d0d0d0;
+            color: var(--gray);
             position: relative;
         }
 
-        nav a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -6px;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon-green), var(--neon-yellow));
-            box-shadow: 0 0 10px var(--neon-green);
-        }
-
         nav a:hover {
-            color: var(--neon-blue);
-            text-shadow: 0 0 8px var(--neon-blue);
+            color: var(--white);
         }
 
-        nav a:hover::after {
-            width: 100%;
+        /* Discord icon */
+        .discord-icon {
+            width: 26px;
+            margin-left: 20px;
+            filter: invert(1);
+            opacity: 0.7;
         }
 
-        .nav-cta {
-            padding: 8px 18px;
-            border-radius: 999px;
-            border: 1px solid rgba(0, 255, 106, 0.7);
-            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.2), transparent 60%);
-            color: var(--neon-green);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            box-shadow: 0 0 14px rgba(0, 255, 106, 0.4);
-        }
-
-        .nav-cta:hover {
-            background: linear-gradient(90deg, var(--neon-green), var(--neon-yellow));
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-green);
+        .discord-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         /* Hero */
@@ -144,20 +118,19 @@
             gap: 8px;
             padding: 4px 10px;
             border-radius: 999px;
-            border: 1px solid rgba(0, 234, 255, 0.5);
-            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #555;
+            background: rgba(0, 0, 0, 0.6);
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.16em;
-            color: #b0faff;
+            color: var(--light-gray);
         }
 
         .hero-badge-dot {
             width: 8px;
             height: 8px;
             border-radius: 999px;
-            background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
+            background: var(--white);
         }
 
         .hero-title {
@@ -165,27 +138,18 @@
             font-size: clamp(32px, 4vw, 44px);
             line-height: 1.1;
             font-weight: 800;
+            color: var(--white);
         }
 
         .hero-title span {
-            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green), var(--neon-yellow));
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 18px rgba(0, 234, 255, 0.6);
+            color: var(--light-gray);
         }
 
         .hero-sub {
             margin-top: 14px;
             max-width: 420px;
             font-size: 14px;
-            color: #b8b8c8;
-        }
-
-        .hero-actions {
-            margin-top: 24px;
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
+            color: var(--gray);
         }
 
         .btn-primary {
@@ -196,155 +160,61 @@
             font-size: 14px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.14em;
-            background: linear-gradient(120deg, var(--neon-green), var(--neon-yellow));
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 106, 0.7);
+            background: var(--white);
+            color: var(--black);
         }
 
         .btn-primary:hover {
-            transform: translateY(-1px) scale(1.02);
-            box-shadow: 0 0 26px rgba(255, 230, 0, 0.8);
+            background: var(--light-gray);
         }
 
         .btn-ghost {
             padding: 10px 20px;
             border-radius: 999px;
-            border: 1px solid rgba(0, 234, 255, 0.7);
+            border: 1px solid #666;
             background: transparent;
-            color: var(--neon-blue);
+            color: var(--white);
             cursor: pointer;
             font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 0.14em;
         }
 
         .btn-ghost:hover {
-            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.18), transparent 60%);
-            box-shadow: 0 0 18px rgba(0, 234, 255, 0.6);
-        }
-
-        .hero-meta {
-            margin-top: 18px;
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: #8a8aa0;
-        }
-
-        .hero-meta span strong {
-            color: var(--neon-yellow);
+            background: rgba(255,255,255,0.1);
         }
 
         .hero-card {
-            position: relative;
             border-radius: 22px;
             padding: 18px;
-            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.2), transparent 55%),
-                        radial-gradient(circle at 100% 100%, rgba(0, 255, 106, 0.2), transparent 55%),
-                        #050509;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
-            border: 1px solid rgba(0, 234, 255, 0.3);
-            overflow: hidden;
-        }
-
-        .hero-card::before {
-            content: "";
-            position: absolute;
-            inset: -40%;
-            background: conic-gradient(from 180deg, rgba(0, 234, 255, 0.2), rgba(0, 255, 106, 0.2), rgba(255, 230, 0, 0.2), transparent 60%);
-            opacity: 0.4;
-            filter: blur(40px);
-        }
-
-        .hero-card-inner {
-            position: relative;
-            border-radius: 18px;
-            padding: 18px;
-            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.18), transparent 60%),
-                        rgba(3, 3, 10, 0.96);
-            border: 1px solid rgba(0, 234, 255, 0.4);
-        }
-
-        .hero-tag {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: #9fdfff;
-            margin-bottom: 8px;
-        }
-
-        .hero-card-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .hero-card-title span {
-            color: var(--neon-green);
+            background: #0a0a0a;
+            border: 1px solid #333;
         }
 
         .hero-card-img {
             margin-top: 10px;
             border-radius: 14px;
             height: 170px;
-            background-image: linear-gradient(135deg, rgba(0, 234, 255, 0.25), rgba(0, 255, 106, 0.25)),
-                              url("https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80");
             background-size: cover;
             background-position: center;
-            box-shadow: 0 0 26px rgba(0, 0, 0, 0.9);
         }
 
-        .hero-card-footer {
-            margin-top: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            color: #a0a0b5;
-        }
-
-        .hero-pill {
-            padding: 4px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 230, 0, 0.7);
-            color: var(--neon-yellow);
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-        }
-
-        /* Section base */
+        /* Section */
         .section {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px 24px 60px;
         }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
         .section-title {
             font-size: 20px;
             text-transform: uppercase;
             letter-spacing: 0.18em;
-            color: #e0e0f0;
-        }
-
-        .section-title span {
-            color: var(--neon-blue);
+            color: var(--white);
         }
 
         .section-sub {
             font-size: 13px;
-            color: #9a9ab0;
+            color: var(--gray);
             max-width: 360px;
         }
 
@@ -359,23 +229,17 @@
         .category-pill {
             padding: 6px 14px;
             border-radius: 999px;
-            border: 1px solid rgba(0, 234, 255, 0.4);
+            border: 1px solid #555;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.14em;
-            color: #c0f7ff;
+            color: var(--white);
             cursor: pointer;
         }
 
         .category-pill.active {
-            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green));
-            color: #000;
-            box-shadow: 0 0 18px rgba(0, 234, 255, 0.7);
-            border-color: transparent;
-        }
-
-        .category-pill:hover:not(.active) {
-            background: rgba(0, 234, 255, 0.08);
+            background: var(--white);
+            color: var(--black);
         }
 
         /* Product grid */
@@ -386,31 +250,10 @@
         }
 
         .product-card {
-            position: relative;
             border-radius: 18px;
             padding: 12px;
-            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.12), transparent 60%),
-                        #050509;
-            border: 1px solid rgba(0, 234, 255, 0.25);
-            box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
-            overflow: hidden;
-        }
-
-        .product-card::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent, rgba(0, 255, 106, 0.12));
-            opacity: 0;
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 26px rgba(0, 255, 106, 0.5);
-        }
-
-        .product-card:hover::after {
-            opacity: 1;
+            background: #0a0a0a;
+            border: 1px solid #333;
         }
 
         .product-img {
@@ -424,23 +267,9 @@
         .product-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: #8a8aa0;
+            color: var(--gray);
             margin-bottom: 6px;
-        }
-
-        .product-brand {
-            color: var(--neon-yellow);
-        }
-
-        .product-tag {
-            padding: 3px 8px;
-            border-radius: 999px;
-            border: 1px solid rgba(0, 255, 106, 0.7);
-            color: var(--neon-green);
         }
 
         .product-name {
@@ -451,28 +280,14 @@
 
         .product-desc {
             font-size: 12px;
-            color: #a8a8c0;
+            color: var(--gray);
             margin-bottom: 10px;
-        }
-
-        .product-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .product-price {
             font-size: 16px;
             font-weight: 700;
-            color: var(--neon-green);
-            text-shadow: 0 0 10px rgba(0, 255, 106, 0.7);
-        }
-
-        .product-price span {
-            font-size: 11px;
-            color: #8a8aa0;
-            font-weight: 400;
-            text-shadow: none;
+            color: var(--white);
         }
 
         .product-btn {
@@ -482,158 +297,44 @@
             cursor: pointer;
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.16em;
-            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green));
-            color: #000;
-            box-shadow: 0 0 16px rgba(0, 234, 255, 0.7);
+            background: var(--white);
+            color: var(--black);
         }
 
         .product-btn:hover {
-            background: linear-gradient(120deg, var(--neon-green), var(--neon-yellow));
-            box-shadow: 0 0 20px rgba(0, 255, 106, 0.9);
-        }
-
-        /* About / Contact */
-        .two-col {
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-            gap: 30px;
-        }
-
-        .card {
-            border-radius: 18px;
-            padding: 20px;
-            background: radial-gradient(circle at 0 0, rgba(0, 234, 255, 0.12), transparent 60%),
-                        #050509;
-            border: 1px solid rgba(0, 234, 255, 0.25);
-            box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--neon-blue);
-        }
-
-        .card p {
-            font-size: 13px;
-            color: #b0b0c5;
-        }
-
-        .about-list {
-            margin-top: 10px;
-            padding-left: 18px;
-            font-size: 13px;
-            color: #c0c0d5;
-        }
-
-        .about-list li {
-            margin-bottom: 6px;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            border-radius: 10px;
-            border: 1px solid rgba(0, 234, 255, 0.4);
-            background: #050509;
-            padding: 10px 12px;
-            font-size: 13px;
-            color: #f5f5f5;
-            box-shadow: 0 0 12px rgba(0, 234, 255, 0.25);
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 18px rgba(0, 234, 255, 0.7);
-        }
-
-        .contact-form button {
-            align-self: flex-start;
-            padding: 8px 18px;
-            border-radius: 999px;
-            border: none;
-            cursor: pointer;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            background: linear-gradient(120deg, var(--neon-green), var(--neon-yellow));
-            color: #000;
-            box-shadow: 0 0 18px rgba(0, 255, 106, 0.8);
-        }
-
-        .contact-form button:hover {
-            background: linear-gradient(120deg, var(--neon-blue), var(--neon-green));
+            background: var(--light-gray);
         }
 
         /* Footer */
         footer {
-            border-top: 1px solid rgba(0, 234, 255, 0.4);
+            border-top: 1px solid #444;
             margin-top: 40px;
             padding: 18px 24px 26px;
             text-align: center;
             font-size: 11px;
-            color: #8a8aa0;
-            background: #020208;
-        }
-
-        footer span {
-            color: var(--neon-green);
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: minmax(0, 1fr);
-            }
-            .hero-card {
-                order: -1;
-            }
-            .two-col {
-                grid-template-columns: minmax(0, 1fr);
-            }
-            .nav-inner {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .nav-inner {
-                justify-content: space-between;
-            }
-            nav {
-                display: none;
-            }
-            .hero {
-                margin-top: 24px;
-            }
+            color: var(--gray);
+            background: #000;
         }
     </style>
 </head>
+
 <body>
 
 <header>
     <div class="nav-inner">
         <div class="logo">
             <div class="logo-mark"></div>
-            <div class="logo-text">Rasy's Services</div>
+            <div class="logo-text">Umbry Services</div>
         </div>
+
         <nav>
             <a href="#shop">Shop</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
-            <button class="nav-cta">New Drops</button>
+
+            <a href="https://discord.gg/ANZJU9e9m9" target="_blank">
+                <img class="discord-icon" src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg">
+            </a>
         </nav>
     </div>
 </header>
@@ -644,12 +345,15 @@
             <div class="hero-badge-dot"></div>
             Designer pieces • Low prices
         </div>
+
         <h1 class="hero-title">
-            Smooth <span>neon‑driven</span> designer shop for your next fit.
+            Premium <span>black‑and‑white</span> designer shop.
         </h1>
+
         <p class="hero-sub">
-            Curated designer clothing with a clean, gaming‑inspired neon look. Jackets, sneakers, tees and more—priced to move fast.
+            Umbry Services brings you curated designer clothing with a clean monochrome aesthetic.
         </p>
+
         <div class="hero-actions">
             <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
                 Browse collection
@@ -658,44 +362,19 @@
                 Request a piece
             </button>
         </div>
-        <div class="hero-meta">
-            <span><strong>24/7</strong> online</span>
-            <span><strong>Fast</strong> replies</span>
-            <span><strong>Trusted</strong> deals</span>
-        </div>
     </div>
 
     <div class="hero-card">
         <div class="hero-card-inner">
-            <div class="hero-tag">Featured drop</div>
-            <div class="hero-card-title">
-                Neon‑lined <span>designer jacket</span> • Limited stock
-            </div>
-            <div class="hero-card-img"></div>
-            <div class="hero-card-footer">
-                <div>
-                    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.16em; color:#8a8aa0;">
-                        Starting at
-                    </div>
-                    <div style="font-size:18px; font-weight:700; color:var(--neon-green); text-shadow:0 0 12px rgba(0,255,106,0.8);">
-                        €89
-                    </div>
-                </div>
-                <div class="hero-pill">Street • Luxury</div>
-            </div>
+            <div class="hero-card-title">Featured Jacket</div>
+            <div class="hero-card-img" style="background-image:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80');"></div>
         </div>
     </div>
 </section>
 
 <section id="shop" class="section">
-    <div class="section-header">
-        <div>
-            <div class="section-title">Shop <span>Designer</span></div>
-            <p class="section-sub">
-                Hand‑picked designer clothing with a neon‑smooth aesthetic. Mix of streetwear, luxury basics and statement pieces.
-            </p>
-        </div>
-    </div>
+    <div class="section-title">Shop Designer</div>
+    <p class="section-sub">Monochrome designer clothing curated for Umbry Services.</p>
 
     <div class="categories">
         <button class="category-pill active">All</button>
@@ -706,122 +385,64 @@
     </div>
 
     <div class="product-grid">
+
         <article class="product-card">
             <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80');"></div>
             <div class="product-meta">
-                <span class="product-brand">Off‑White style</span>
-                <span class="product-tag">Jacket</span>
+                <span>Off‑White Style</span>
+                <span>Jacket</span>
             </div>
-            <div class="product-name">Neon‑lined black bomber</div>
-            <div class="product-desc">Clean black shell with subtle neon piping—perfect for night city fits.</div>
+            <div class="product-name">Black Bomber</div>
+            <div class="product-desc">Clean black shell with subtle detailing.</div>
             <div class="product-bottom">
-                <div class="product-price">€89 <span>incl. VAT</span></div>
-                <button class="product-btn">Add to list</button>
+                <div class="product-price">€89</div>
+                <button class="product-btn">Add</button>
             </div>
         </article>
 
         <article class="product-card">
             <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80');"></div>
             <div class="product-meta">
-                <span class="product-brand">Street luxe</span>
-                <span class="product-tag">Sneakers</span>
+                <span>Street Luxe</span>
+                <span>Sneakers</span>
             </div>
-            <div class="product-name">Glow‑accent white sneakers</div>
-            <div class="product-desc">Minimal white base with neon blue and green accents that pop under lights.</div>
+            <div class="product-name">White Sneakers</div>
+            <div class="product-desc">Minimal white base with clean accents.</div>
             <div class="product-bottom">
-                <div class="product-price">€79 <span>incl. VAT</span></div>
-                <button class="product-btn">Add to list</button>
+                <div class="product-price">€79</div>
+                <button class="product-btn">Add</button>
             </div>
         </article>
 
         <article class="product-card">
             <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80');"></div>
             <div class="product-meta">
-                <span class="product-brand">Graphic</span>
-                <span class="product-tag">T‑shirt</span>
+                <span>Graphic</span>
+                <span>T‑shirt</span>
             </div>
-            <div class="product-name">Blue neon logo tee</div>
-            <div class="product-desc">Soft cotton tee with a bold neon logo print—simple but loud.</div>
+            <div class="product-name">Logo Tee</div>
+            <div class="product-desc">Soft cotton tee with bold print.</div>
             <div class="product-bottom">
-                <div class="product-price">€39 <span>incl. VAT</span></div>
-                <button class="product-btn">Add to list</button>
+                <div class="product-price">€39</div>
+                <button class="product-btn">Add</button>
             </div>
         </article>
 
-        <article class="product-card">
-            <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80');"></div>
-            <div class="product-meta">
-                <span class="product-brand">Capsule</span>
-                <span class="product-tag">Hoodie</span>
-            </div>
-            <div class="product-name">Yellow neon hoodie</div>
-            <div class="product-desc">Oversized hoodie with yellow neon drawstrings and subtle chest print.</div>
-            <div class="product-bottom">
-                <div class="product-price">€59 <span>incl. VAT</span></div>
-                <button class="product-btn">Add to list</button>
-            </div>
-        </article>
     </div>
 </section>
 
 <section id="about" class="section">
-    <div class="two-col">
-        <div class="card">
-            <h3>About the shop</h3>
-            <p>
-                Rasy's Services focuses on designer‑style clothing with a smooth, neon‑inspired aesthetic.  
-                Think late‑night city lights, gaming overlays and clean silhouettes—all at accessible prices.
-            </p>
-            <ul class="about-list">
-                <li>Curated drops instead of endless scrolling.</li>
-                <li>Designer‑style fits with a modern, digital look.</li>
-                <li>Clear communication on sizing and condition.</li>
-                <li>Fast responses for questions and custom requests.</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>How it works</h3>
-            <p>
-                Pick the pieces you like, send your list through the contact form, and you’ll get a quick reply with availability and details.
-            </p>
-            <ul class="about-list">
-                <li>Browse the collection and note the items you want.</li>
-                <li>Use the “Add to list” buttons as a reminder for yourself.</li>
-                <li>Send your list, size and location via the form below.</li>
-                <li>Get a reply with final pricing and next steps.</li>
-            </ul>
-        </div>
-    </div>
+    <div class="section-title">About Umbry Services</div>
+    <p class="section-sub">Designer‑style clothing in a clean monochrome aesthetic.</p>
 </section>
 
 <section id="contact" class="section">
-    <div class="two-col">
-        <div class="card">
-            <h3>Contact</h3>
-            <p>
-                Ready to lock in a fit or ask about a specific piece?  
-                Drop your details and I’ll get back to you quickly.
-            </p>
-            <form class="contact-form">
-                <input type="text" placeholder="Your name">
-                <input type="email" placeholder="Email">
-                <textarea rows="4" placeholder="What items are you interested in? (Names, sizes, budget)"></textarea>
-                <button type="button">Send message</button>
-            </form>
-        </div>
-
-        <div class="card">
-            <h3>Quick info</h3>
-            <p><strong style="color:var(--neon-green);">Location:</strong> Online‑based, EU‑friendly shipping.</p>
-            <p><strong style="color:var(--neon-blue);">Response time:</strong> Usually within a few hours.</p>
-            <p><strong style="color:var(--neon-yellow);">Tip:</strong> Include your size and budget so I can suggest the best pieces for you.</p>
-        </div>
-    </div>
+    <div class="section-title">Contact</div>
+    <p class="section-sub">Send your request and we’ll reply quickly.</p>
 </section>
 
 <footer>
-    © <span>Rasy's Services</span> — Designer‑style clothing in neon smooth fashion.
+    © Umbry Services — Monochrome designer clothing.
 </footer>
 
 </body>
