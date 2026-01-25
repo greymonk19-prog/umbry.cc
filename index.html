@@ -1,1016 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Sleek Store</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #0f172a;
-      --bg-alt: #020617;
-      --card: #020617;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.12);
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --border: #1f2937;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
-      --shadow-chip: 0 10px 25px rgba(15, 23, 42, 0.9);
-      --blur: blur(18px);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px 20px 40px;
-    }
-
-    /* Glassy shell */
-    .shell {
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.12), transparent 55%),
-                  linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
-      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
-      padding: 18px 18px 22px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.16), transparent 55%);
-      opacity: 0.6;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .shell-inner {
-      position: relative;
-      z-index: 1;
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
-      padding: 18px 20px 22px;
-      backdrop-filter: blur(18px);
-    }
-
-    /* Top bar */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: conic-gradient(from 210deg, #38bdf8, #a855f7, #f97316, #38bdf8);
-      padding: 2px;
-      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
-                  0 10px 25px rgba(15, 23, 42, 0.9);
-    }
-
-    .brand-logo-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 30% 0%, #e5e7eb, #020617 70%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #020617;
-      font-weight: 700;
-      font-size: 16px;
-      letter-spacing: 0.03em;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-name {
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 11px;
-      color: #e5e7eb;
-    }
-
-    .brand-tagline {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-    }
-
-    .nav-link {
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: var(--muted);
-      border: 1px solid transparent;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.18s ease-out;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .nav-link span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.7);
-    }
-
-    .nav-link.active {
-      color: #e5e7eb;
-      border-color: rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
-    }
-
-    .nav-link.active span.dot {
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
-    }
-
-    .nav-cta {
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.98));
-      color: #e5e7eb;
-      font-size: 12px;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      box-shadow: 0 12px 30px rgba(8, 47, 73, 0.9);
-      transition: all 0.18s ease-out;
-    }
-
-    .nav-cta span.pill {
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 40px rgba(8, 47, 73, 0.95);
-    }
-
-    /* Main layout */
-    .main {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 18px;
-    }
-
-    @media (max-width: 900px) {
-      .main {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav {
-        width: 100%;
-        justify-content: space-between;
-      }
-    }
-
-    /* Hero */
-    .hero {
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.18), transparent 55%),
-                  linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.98));
-      padding: 18px 18px 18px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .hero-label span.badge {
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: rgba(22, 163, 74, 0.18);
-      color: #bbf7d0;
-      border: 1px solid rgba(34, 197, 94, 0.5);
-      font-size: 10px;
-    }
-
-    .hero-metrics {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .hero-metric {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
-
-    .hero-metric span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(52, 211, 153, 0.9);
-      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
-    }
-
-    .hero-title {
-      font-size: 26px;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-
-    .hero-title span.accent {
-      background: linear-gradient(120deg, #38bdf8, #a855f7, #f97316);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      max-width: 420px;
-      margin-bottom: 16px;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.9);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.4), rgba(15, 23, 42, 0.98));
-      color: #e5e7eb;
-      font-size: 13px;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      box-shadow: 0 16px 40px rgba(8, 47, 73, 0.95);
-      transition: all 0.18s ease-out;
-    }
-
-    .btn-primary span.icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 20px 55px rgba(8, 47, 73, 0.98);
-    }
-
-    .btn-ghost {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.18s ease-out;
-    }
-
-    .btn-ghost span.avatar {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #38bdf8, #a855f7);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #020617;
-      font-weight: 600;
-    }
-
-    .btn-ghost:hover {
-      border-color: rgba(148, 163, 184, 0.8);
-      color: #e5e7eb;
-    }
-
-    .hero-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 11px;
-      color: var(--muted);
-      flex-wrap: wrap;
-    }
-
-    .hero-badges {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .hero-badge {
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.9);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-badge span.pill {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.9);
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
-    }
-
-    .hero-note {
-      opacity: 0.9;
-    }
-
-    /* Product grid */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .search-card {
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
-      padding: 12px 12px 12px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.95);
-    }
-
-    .search-label {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .search-label span.status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      font-size: 10px;
-    }
-
-    .search-label span.status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(52, 211, 153, 0.9);
-    }
-
-    .search-input-wrap {
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 8px 30px 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      font-size: 12px;
-      outline: none;
-      transition: all 0.18s ease-out;
-    }
-
-    .search-input::placeholder {
-      color: rgba(148, 163, 184, 0.7);
-    }
-
-    .search-input:focus {
-      border-color: rgba(56, 189, 248, 0.9);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7);
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 9px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 13px;
-      color: rgba(148, 163, 184, 0.9);
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .filter-pill {
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      font-size: 11px;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.18s ease-out;
-    }
-
-    .filter-pill.active {
-      border-color: rgba(56, 189, 248, 0.9);
-      color: #e5e7eb;
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.98));
-      box-shadow: 0 10px 25px rgba(8, 47, 73, 0.9);
-    }
-
-    .product-card {
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.99));
-      padding: 12px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.98);
-      display: grid;
-      grid-template-columns: 1.1fr 1.2fr;
-      gap: 10px;
-      align-items: center;
-    }
-
-    @media (max-width: 600px) {
-      .product-card {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .product-media {
-      position: relative;
-      border-radius: 16px;
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.98));
-      padding: 10px;
-      overflow: hidden;
-    }
-
-    .product-blob {
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.4), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.4), transparent 55%);
-      opacity: 0.7;
-      mix-blend-mode: screen;
-    }
-
-    .product-device {
-      position: relative;
-      border-radius: 14px;
-      background: radial-gradient(circle at top, #020617, #020617 60%, #0b1120 100%);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 10px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 1);
-    }
-
-    .product-screen {
-      border-radius: 10px;
-      background: radial-gradient(circle at top left, #38bdf8, #a855f7, #f97316);
-      padding: 2px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .product-screen-inner {
-      border-radius: 8px;
-      background: radial-gradient(circle at top, #020617, #020617 60%, #020617 100%);
-      padding: 10px;
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .product-screen-main {
-      font-size: 11px;
-      color: #e5e7eb;
-    }
-
-    .product-screen-main h4 {
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-
-    .product-screen-main p {
-      font-size: 10px;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .product-screen-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .product-screen-tag {
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      font-size: 9px;
-      color: #9ca3af;
-    }
-
-    .product-screen-side {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      align-items: flex-end;
-      font-size: 9px;
-      color: #9ca3af;
-    }
-
-    .product-screen-price {
-      font-size: 13px;
-      font-weight: 600;
-      color: #e5e7eb;
-    }
-
-    .product-screen-pill {
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-    }
-
-    .product-chip {
-      position: absolute;
-      bottom: 8px;
-      left: 10px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      font-size: 9px;
-      color: #9ca3af;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: var(--shadow-chip);
-      backdrop-filter: blur(10px);
-    }
-
-    .product-chip span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.9);
-    }
-
-    .product-content {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .product-eyebrow {
-      font-size: 11px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .product-eyebrow span.line {
-      width: 18px;
-      height: 1px;
-      background: linear-gradient(to right, rgba(148, 163, 184, 0.8), transparent);
-    }
-
-    .product-title {
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .product-description {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .product-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--muted);
-      flex-wrap: wrap;
-    }
-
-    .product-meta-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .product-tag {
-      padding: 3px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .product-rating {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .product-rating span.star {
-      color: #facc15;
-      font-size: 11px;
-    }
-
-    .product-price {
-      font-size: 14px;
-      font-weight: 600;
-      color: #e5e7eb;
-    }
-
-    .product-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 4px;
-      flex-wrap: wrap;
-    }
-
-    .btn-cart {
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.9);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.98));
-      color: #e5e7eb;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 14px 35px rgba(8, 47, 73, 0.95);
-      transition: all 0.18s ease-out;
-    }
-
-    .btn-cart span.icon {
-      font-size: 13px;
-    }
-
-    .btn-cart:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 45px rgba(8, 47, 73, 0.98);
-    }
-
-    .btn-secondary {
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: all 0.18s ease-out;
-    }
-
-    .btn-secondary:hover {
-      border-color: rgba(148, 163, 184, 0.9);
-      color: #e5e7eb;
-    }
-
-    /* Footer strip */
-    .footer-strip {
-      margin-top: 18px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-      opacity: 0.9;
-    }
-
-    .footer-strip span.highlight {
-      color: #e5e7eb;
-    }
-
-    .footer-dots {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .footer-dots span {
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.8);
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Umbry Services — Designer Products for Less</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0d0d0d;
+    color: #fff;
+  }
+
+  header {
+    background: #111;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+  }
+
+  .logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  nav a {
+    margin-left: 20px;
+    color: #bbb;
+    text-decoration: none;
+    font-size: 15px;
+  }
+
+  nav a:hover {
+    color: #fff;
+  }
+
+  .hero {
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #1a1a1a, #000);
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    color: #ccc;
+    font-size: 18px;
+  }
+
+  .categories {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .categories h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: #151515;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #222;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: #444;
+  }
+
+  .card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .card h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .card p {
+    margin: 6px 0 0;
+    color: #aaa;
+    font-size: 14px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #777;
+    border-top: 1px solid #222;
+  }
+</style>
 </head>
 <body>
-  <div class="page">
-    <div class="shell">
-      <div class="shell-inner">
-        <!-- Top bar -->
-        <header class="top-bar">
-          <div class="brand">
-            <div class="brand-logo">
-              <div class="brand-logo-inner">S</div>
-            </div>
-            <div class="brand-text">
-              <div class="brand-name">SPECTRUM STUDIO</div>
-              <div class="brand-tagline">Minimal hardware, maximal presence.</div>
-            </div>
-          </div>
-          <nav class="nav">
-            <button class="nav-link active">
-              <span class="dot"></span>
-              Home
-            </button>
-            <button class="nav-link">Collections</button>
-            <button class="nav-link">About</button>
-            <button class="nav-link">Support</button>
-            <button class="nav-cta">
-              Shop now
-              <span class="pill">New drop</span>
-            </button>
-          </nav>
-        </header>
 
-        <!-- Main -->
-        <main class="main">
-          <!-- Hero -->
-          <section class="hero">
-            <div class="hero-header">
-              <div class="hero-label">
-                Curated for modern desks
-                <span class="badge">In stock</span>
-              </div>
-              <div class="hero-metrics">
-                <div class="hero-metric">
-                  <span class="dot"></span>
-                  4.9 rating
-                </div>
-                <div class="hero-metric">
-                  24h dispatch
-                </div>
-              </div>
-            </div>
+<header>
+  <div class="logo">Umbry Services</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#hoodies">Hoodies</a>
+    <a href="#shoes">Shoes</a>
+    <a href="#accessories">Accessories</a>
+    <a href="#jackets">Jackets</a>
+    <a href="#bags">Bags</a>
+  </nav>
+</header>
 
-            <h1 class="hero-title">
-              Build a desk setup that feels
-              <span class="accent">effortless.</span>
-            </h1>
-            <p class="hero-subtitle">
-              Sleek peripherals, soft lighting, and hardware that disappears into your workflow—without looking like everyone else’s.
-            </p>
+<section class="hero">
+  <h1>Designer Products. Better Prices.</h1>
+  <p>Umbry Services brings you premium fashion without the premium price tag.</p>
+</section>
 
-            <div class="hero-actions">
-              <button class="btn-primary">
-                <span class="icon">➜</span>
-                Explore featured collection
-              </button>
-              <button class="btn-ghost">
-                <span class="avatar">◎</span>
-                See how others set it up
-              </button>
-            </div>
+<div class="categories">
 
-            <div class="hero-footer">
-              <div class="hero-badges">
-                <div class="hero-badge">
-                  <span class="pill"></span>
-                  Free UK shipping over £80
-                </div>
-                <div class="hero-badge">
-                  30‑day returns
-                </div>
-              </div>
-              <div class="hero-note">
-                No loud branding, no RGB storms—just calm, considered hardware.
-              </div>
-            </div>
-          </section>
-
-          <!-- Sidebar / product highlight -->
-          <aside class="sidebar">
-            <section class="search-card">
-              <div class="search-label">
-                <span>Search the store</span>
-                <span class="status">
-                  <span class="status-dot"></span>
-                  Live inventory
-                </span>
-              </div>
-              <div class="search-input-wrap">
-                <input
-                  class="search-input"
-                  type="text"
-                  placeholder="Find keyboards, stands, lighting..."
-                />
-                <span class="search-icon">⌕</span>
-              </div>
-              <div class="filters">
-                <button class="filter-pill active">All</button>
-                <button class="filter-pill">Keyboards</button>
-                <button class="filter-pill">Desk mats</button>
-                <button class="filter-pill">Lighting</button>
-                <button class="filter-pill">Accessories</button>
-              </div>
-            </section>
-
-            <section class="product-card">
-              <div class="product-media">
-                <div class="product-blob"></div>
-                <div class="product-device">
-                  <div class="product-screen">
-                    <div class="product-screen-inner">
-                      <div class="product-screen-main">
-                        <h4>Mono Arc Keyboard</h4>
-                        <p>Low‑profile, wireless, and tuned for quiet focus.</p>
-                        <div class="product-screen-tags">
-                          <span class="product-screen-tag">65% layout</span>
-                          <span class="product-screen-tag">Hot‑swap</span>
-                          <span class="product-screen-tag">USB‑C</span>
-                        </div>
-                      </div>
-                      <div class="product-screen-side">
-                        <div class="product-screen-price">£189</div>
-                        <div class="product-screen-pill">Ships in 24h</div>
-                        <div class="product-screen-pill">3 colours</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="product-chip">
-                  <span class="dot"></span>
-                  Featured this week
-                </div>
-              </div>
-
-              <div class="product-content">
-                <div class="product-eyebrow">
-                  <span class="line"></span>
-                  Signature series
-                </div>
-                <h2 class="product-title">Mono Arc Wireless Keyboard</h2>
-                <p class="product-description">
-                  A compact, sculpted board designed to disappear into your desk. Soft‑touch keycaps, aluminium frame, and a finish that resists fingerprints and glare.
-                </p>
-
-                <div class="product-meta">
-                  <div class="product-meta-left">
-                    <span class="product-tag">Limited run</span>
-                    <span class="product-tag">UK &amp; ISO layouts</span>
-                    <span class="product-rating">
-                      <span class="star">★</span>
-                      4.9 • 312 reviews
-                    </span>
-                  </div>
-                  <div class="product-price">From £189</div>
-                </div>
-
-                <div class="product-actions">
-                  <button class="btn-cart">
-                    <span class="icon">＋</span>
-                    Add to cart
-                  </button>
-                  <button class="btn-secondary">
-                    View details
-                  </button>
-                </div>
-              </div>
-            </section>
-          </aside>
-        </main>
-
-        <div class="footer-strip">
-          <span>
-            Designed for calm workspaces.
-            <span class="highlight">No noise, just signal.</span>
-          </span>
-          <span class="footer-dots">
-            <span></span><span></span><span></span>
-          </span>
-        </div>
-      </div>
+  <!-- HOODIES -->
+  <h2 id="hoodies">Hoodies</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Designer Hoodie A</h3>
+      <p>£49.99</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Designer Hoodie B</h3>
+      <p>£59.99</p>
     </div>
   </div>
+
+  <!-- SHOES -->
+  <h2 id="shoes" style="margin-top:40px;">Shoes</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Luxury Sneakers</h3>
+      <p>£79.99</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Designer Runners</h3>
+      <p>£89.99</p>
+    </div>
+  </div>
+
+  <!-- ACCESSORIES -->
+  <h2 id="accessories" style="margin-top:40px;">Accessories</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Premium Cap</h3>
+      <p>£19.99</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Designer Belt</h3>
+      <p>£29.99</p>
+    </div>
+  </div>
+
+  <!-- JACKETS -->
+  <h2 id="jackets" style="margin-top:40px;">Jackets</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Windbreaker</h3>
+      <p>£69.99</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Designer Puffer</h3>
+      <p>£99.99</p>
+    </div>
+  </div>
+
+  <!-- BAGS -->
+  <h2 id="bags" style="margin-top:40px;">Bags</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Crossbody Bag</h3>
+      <p>£39.99</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="">
+      <h3>Luxury Backpack</h3>
+      <p>£59.99</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Umbry Services — Designer fashion for less.
+</footer>
+
 </body>
 </html>
