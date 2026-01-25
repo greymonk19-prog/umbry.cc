@@ -4,210 +4,327 @@
 <meta charset="UTF-8">
 <title>Umbry Services — Designer Products for Less</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0d0d0d;
-    color: #fff;
-  }
+/* ---------------- GLOBAL ---------------- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0b0b;
+  color: #fff;
+  cursor: none; /* hide default cursor */
+  scroll-behavior: smooth;
+}
 
-  header {
-    background: #111;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #222;
-  }
+/* Custom dot cursor */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
 
-  .logo {
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.2s forwards;
+}
 
-  nav a {
-    margin-left: 20px;
-    color: #bbb;
-    text-decoration: none;
-    font-size: 15px;
-  }
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
 
-  nav a:hover {
-    color: #fff;
-  }
+/* Slide-up animation */
+.slide-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 1s forwards;
+}
 
-  .hero {
-    padding: 80px 20px;
-    text-align: center;
-    background: linear-gradient(135deg, #1a1a1a, #000);
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .hero h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
-  }
+/* ---------------- NAVBAR ---------------- */
+header {
+  background: #111;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #222;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-  .hero p {
-    color: #ccc;
-    font-size: 18px;
-  }
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
 
-  .categories {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
-  }
+nav a {
+  margin-left: 20px;
+  color: #bbb;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.2s;
+}
 
-  .categories h2 {
-    margin-bottom: 20px;
-    font-size: 26px;
-  }
+nav a:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #fff;
+}
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-  }
+/* Discord icon */
+.discord {
+  width: 26px;
+  vertical-align: middle;
+  filter: brightness(0.7);
+  transition: 0.2s;
+}
 
-  .card {
-    background: #151515;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #222;
-    transition: 0.2s;
-    cursor: pointer;
-  }
+.discord:hover {
+  filter: brightness(1);
+  transform: scale(1.1);
+}
 
-  .card:hover {
-    transform: translateY(-4px);
-    border-color: #444;
-  }
+/* Search bar */
+.search-bar {
+  margin-left: 30px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+  width: 220px;
+  transition: 0.2s;
+}
 
-  .card img {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 12px;
-  }
+.search-bar:focus {
+  border-color: #555;
+  box-shadow: 0 0 8px #444;
+}
 
-  .card h3 {
-    margin: 0;
-    font-size: 18px;
-  }
+/* ---------------- HERO ---------------- */
+.hero {
+  padding: 90px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a1a, #000);
+}
 
-  .card p {
-    margin: 6px 0 0;
-    color: #aaa;
-    font-size: 14px;
-  }
+.hero h1 {
+  font-size: 46px;
+  margin-bottom: 10px;
+  animation: fadeIn 1.5s forwards;
+}
 
-  footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    color: #777;
-    border-top: 1px solid #222;
-  }
+.hero p {
+  color: #ccc;
+  font-size: 18px;
+  animation: slideUp 1.5s forwards;
+}
+
+/* ---------------- SECTIONS ---------------- */
+section {
+  padding: 50px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  border-left: 4px solid #444;
+  padding-left: 10px;
+  animation: fadeIn 1s forwards;
+}
+
+/* ---------------- PRODUCT GRID ---------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #151515;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #222;
+  transition: 0.25s;
+  cursor: pointer;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: #555;
+  box-shadow: 0 0 20px rgba(255,255,255,0.08);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: 0.3s;
+}
+
+.card:hover img {
+  filter: brightness(1.15);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.card p {
+  margin: 6px 0 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  color: #777;
+  border-top: 1px solid #222;
+}
 </style>
 </head>
+
 <body>
+
+<!-- Custom cursor -->
+<div class="cursor-dot" id="cursor"></div>
+
+<script>
+document.addEventListener("mousemove", e => {
+  const cursor = document.getElementById("cursor");
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+</script>
 
 <header>
   <div class="logo">Umbry Services</div>
+
+  <input class="search-bar" type="text" placeholder="Search products...">
+
   <nav>
-    <a href="#">Home</a>
+    <a href="#home">Home</a>
     <a href="#hoodies">Hoodies</a>
     <a href="#shoes">Shoes</a>
     <a href="#accessories">Accessories</a>
     <a href="#jackets">Jackets</a>
     <a href="#bags">Bags</a>
+
+    <a href="https://discord.gg/ANZJU9e9m9" target="_blank">
+      <img class="discord" src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg">
+    </a>
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="home">
   <h1>Designer Products. Better Prices.</h1>
-  <p>Umbry Services brings you premium fashion without the premium price tag.</p>
+  <p>Premium fashion without the premium price tag.</p>
 </section>
 
-<div class="categories">
-
-  <!-- HOODIES -->
-  <h2 id="hoodies">Hoodies</h2>
+<!-- HOODIES -->
+<section id="hoodies" class="fade-in">
+  <h2>Hoodies</h2>
   <div class="grid">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Designer Hoodie A</h3>
       <p>£49.99</p>
     </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Designer Hoodie B</h3>
       <p>£59.99</p>
     </div>
   </div>
+</section>
 
-  <!-- SHOES -->
-  <h2 id="shoes" style="margin-top:40px;">Shoes</h2>
+<!-- SHOES -->
+<section id="shoes" class="fade-in">
+  <h2>Shoes</h2>
   <div class="grid">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Luxury Sneakers</h3>
       <p>£79.99</p>
     </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Designer Runners</h3>
       <p>£89.99</p>
     </div>
   </div>
+</section>
 
-  <!-- ACCESSORIES -->
-  <h2 id="accessories" style="margin-top:40px;">Accessories</h2>
+<!-- ACCESSORIES -->
+<section id="accessories" class="fade-in">
+  <h2>Accessories</h2>
   <div class="grid">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Premium Cap</h3>
       <p>£19.99</p>
     </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Designer Belt</h3>
       <p>£29.99</p>
     </div>
   </div>
+</section>
 
-  <!-- JACKETS -->
-  <h2 id="jackets" style="margin-top:40px;">Jackets</h2>
+<!-- JACKETS -->
+<section id="jackets" class="fade-in">
+  <h2>Jackets</h2>
   <div class="grid">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Windbreaker</h3>
       <p>£69.99</p>
     </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Designer Puffer</h3>
       <p>£99.99</p>
     </div>
   </div>
+</section>
 
-  <!-- BAGS -->
-  <h2 id="bags" style="margin-top:40px;">Bags</h2>
+<!-- BAGS -->
+<section id="bags" class="fade-in">
+  <h2>Bags</h2>
   <div class="grid">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Crossbody Bag</h3>
       <p>£39.99</p>
     </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200" alt="">
+    <div class="card slide-up">
+      <img src="https://via.placeholder.com/300x200">
       <h3>Luxury Backpack</h3>
       <p>£59.99</p>
     </div>
   </div>
-
-</div>
+</section>
 
 <footer>
   © 2026 Umbry Services — Designer fashion for less.
