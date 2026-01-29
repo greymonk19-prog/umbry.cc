@@ -1,1241 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Monochrome Services</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #050608;
-      --bg-elevated: #0d0f14;
-      --bg-soft: #151823;
-      --accent: #f5f5f5;
-      --accent-soft: #b3b3b3;
-      --accent-strong: #ffffff;
-      --border-subtle: #262a36;
-      --danger: #ff4b4b;
-      --success: #4bff9b;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-pill: 999px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
-      --transition-fast: 0.18s ease-out;
-      --transition-med: 0.25s ease;
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: var(--font-main);
-      background: radial-gradient(circle at top, #151823 0, #050608 55%);
-      color: var(--accent-soft);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      padding: 32px 16px;
-    }
-
-    .app-shell {
-      width: 100%;
-      max-width: 1180px;
-      background: linear-gradient(145deg, #050608 0, #0b0d12 40%, #050608 100%);
-      border-radius: 28px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      overflow: hidden;
-      position: relative;
-      isolation: isolate;
-    }
-
-    /* subtle glow */
-    .app-shell::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.06), transparent 55%),
-        radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.04), transparent 55%);
-      opacity: 0.7;
-      mix-blend-mode: soft-light;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    header {
-      padding: 18px 24px 14px;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 16px;
-      background: conic-gradient(from 210deg, #ffffff, #777777, #111111, #ffffff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #050608;
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.08em;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35),
-        0 12px 30px rgba(0, 0, 0, 0.8);
-    }
-
-    .brand-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-title {
-      font-size: 18px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent-strong);
-    }
-
-    .brand-subtitle {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent-soft);
-      opacity: 0.7;
-    }
-
-    .header-right {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .pill {
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 18, 0.9);
-      padding: 6px 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent-soft);
-    }
-
-    .pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: radial-gradient(circle, var(--success), #00b36b);
-      box-shadow: 0 0 12px rgba(0, 255, 153, 0.7);
-    }
-
-    .cart-pill {
-      cursor: pointer;
-      transition: background var(--transition-fast), border-color var(--transition-fast),
-        transform var(--transition-fast);
-    }
-
-    .cart-pill:hover {
-      background: #151823;
-      border-color: #3a3f52;
-      transform: translateY(-1px);
-    }
-
-    .cart-count {
-      min-width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: #ffffff;
-      color: #050608;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(260px, 1.1fr);
-      gap: 0;
-      min-height: 0;
-    }
-
-    @media (max-width: 880px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .catalog-panel {
-      border-right: 1px solid var(--border-subtle);
-      padding: 18px 22px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      min-height: 0;
-    }
-
-    @media (max-width: 880px) {
-      .catalog-panel {
-        border-right: none;
-        border-bottom: 1px solid var(--border-subtle);
-      }
-    }
-
-    .catalog-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .catalog-title {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent-strong);
-    }
-
-    .catalog-sub {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent-soft);
-      opacity: 0.7;
-    }
-
-    .search-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .search-input-wrap {
-      position: relative;
-      flex: 1;
-    }
-
-    .search-input {
-      width: 100%;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 18, 0.9);
-      padding: 9px 32px 9px 32px;
-      color: var(--accent-soft);
-      font-size: 13px;
-      outline: none;
-      transition: border-color var(--transition-fast), background var(--transition-fast),
-        box-shadow var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .search-input::placeholder {
-      color: #5d6272;
-    }
-
-    .search-input:focus {
-      border-color: #ffffff;
-      background: #11131b;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
-      transform: translateY(-0.5px);
-    }
-
-    .search-icon,
-    .search-kbd {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 11px;
-      color: #6b6f7f;
-      pointer-events: none;
-    }
-
-    .search-icon {
-      left: 12px;
-    }
-
-    .search-kbd {
-      right: 12px;
-      border-radius: 6px;
-      border: 1px solid #2f3341;
-      padding: 2px 5px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .view-toggle {
-      display: flex;
-      align-items: center;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 18, 0.9);
-      padding: 3px;
-      gap: 3px;
-    }
-
-    .view-btn {
-      flex: 1;
-      border-radius: var(--radius-pill);
-      border: none;
-      background: transparent;
-      color: #7a7f8f;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 6px 10px;
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast),
-        transform var(--transition-fast);
-    }
-
-    .view-btn.active {
-      background: #f5f5f5;
-      color: #050608;
-      transform: translateY(-0.5px);
-    }
-
-    .view-btn span {
-      opacity: 0.7;
-      margin-right: 4px;
-    }
-
-    .filters-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .chip {
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 18, 0.9);
-      padding: 4px 10px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #7a7f8f;
-      cursor: pointer;
-      transition: background var(--transition-fast), border-color var(--transition-fast),
-        color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .chip.active {
-      background: #f5f5f5;
-      border-color: #f5f5f5;
-      color: #050608;
-      transform: translateY(-0.5px);
-    }
-
-    .sort-select {
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 18, 0.9);
-      color: var(--accent-soft);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 6px 10px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .products-grid {
-      margin-top: 6px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      padding-right: 4px;
-      overflow-y: auto;
-      padding-bottom: 6px;
-    }
-
-    @media (max-width: 1040px) {
-      .products-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .products-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .product-card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      background: radial-gradient(circle at top, #181b26 0, #0b0d12 55%);
-      padding: 12px 12px 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      cursor: pointer;
-      transition: transform var(--transition-med), box-shadow var(--transition-med),
-        border-color var(--transition-med), background var(--transition-med);
-      overflow: hidden;
-    }
-
-    .product-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.08), transparent 55%);
-      opacity: 0;
-      transition: opacity var(--transition-med);
-      pointer-events: none;
-    }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
-      border-color: rgba(255, 255, 255, 0.18);
-      background: radial-gradient(circle at top, #1f2230 0, #0b0d12 55%);
-    }
-
-    .product-card:hover::before {
-      opacity: 1;
-    }
-
-    .product-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .product-name {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent-strong);
-    }
-
-    .product-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #9a9fb0;
-      opacity: 0.8;
-    }
-
-    .product-price {
-      font-size: 13px;
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-
-    .product-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-      margin-top: 2px;
-    }
-
-    .product-pill {
-      border-radius: var(--radius-pill);
-      border: 1px solid #2f3341;
-      padding: 3px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #7a7f8f;
-    }
-
-    .product-cta {
-      margin-top: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-ghost {
-      flex: 1;
-      border-radius: var(--radius-pill);
-      border: 1px solid #2f3341;
-      background: rgba(10, 12, 18, 0.9);
-      color: #9a9fb0;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 6px 8px;
-      cursor: pointer;
-      transition: background var(--transition-fast), border-color var(--transition-fast),
-        color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .btn-ghost:hover {
-      background: #151823;
-      border-color: #3a3f52;
-      color: var(--accent-strong);
-      transform: translateY(-1px);
-    }
-
-    .btn-solid {
-      flex: 1;
-      border-radius: var(--radius-pill);
-      border: none;
-      background: #f5f5f5;
-      color: #050608;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 6px 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background var(--transition-fast), transform var(--transition-fast),
-        box-shadow var(--transition-fast);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-    }
-
-    .btn-solid:hover {
-      background: #ffffff;
-      transform: translateY(-1px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.85);
-    }
-
-    .btn-solid:active {
-      transform: translateY(0);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
-    }
-
-    .product-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 6, 8, 0.9);
-      padding: 3px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #f5f5f5;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .product-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #ffffff, #777777);
-    }
-
-    .product-desc {
-      font-size: 11px;
-      color: #8b90a0;
-      line-height: 1.4;
-      margin-top: 2px;
-    }
-
-    .product-rating {
-      font-size: 10px;
-      color: #b3b7c7;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-top: 2px;
-    }
-
-    .sidebar {
-      padding: 18px 20px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-height: 0;
-    }
-
-    .sidebar-section-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent-strong);
-      opacity: 0.9;
-    }
-
-    .summary-card {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      background: radial-gradient(circle at top, #181b26 0, #0b0d12 55%);
-      padding: 12px 12px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: #9a9fb0;
-    }
-
-    .summary-row strong {
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-
-    .summary-total {
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .summary-total strong {
-      font-size: 16px;
-    }
-
-    .summary-tagline {
-      font-size: 11px;
-      color: #8b90a0;
-      line-height: 1.4;
-    }
-
-    .summary-badge {
-      border-radius: var(--radius-pill);
-      border: 1px solid #2f3341;
-      padding: 3px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #7a7f8f;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .summary-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #ffffff, #777777);
-    }
-
-    .cart-list {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 18, 0.9);
-      padding: 10px 10px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      max-height: 210px;
-      overflow-y: auto;
-    }
-
-    .cart-empty {
-      font-size: 11px;
-      color: #7a7f8f;
-      text-align: center;
-      padding: 12px 4px;
-    }
-
-    .cart-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 4px 8px;
-      align-items: center;
-      font-size: 11px;
-      padding: 6px 6px;
-      border-radius: 10px;
-      background: rgba(15, 18, 26, 0.9);
-    }
-
-    .cart-item-name {
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent-strong);
-    }
-
-    .cart-item-meta {
-      font-size: 10px;
-      color: #8b90a0;
-    }
-
-    .cart-item-price {
-      font-size: 11px;
-      color: var(--accent-strong);
-      text-align: right;
-    }
-
-    .cart-item-remove {
-      justify-self: end;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #ff8080;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      padding: 0;
-    }
-
-    .checkout-btn {
-      margin-top: 4px;
-      width: 100%;
-      border-radius: var(--radius-pill);
-      border: none;
-      background: #f5f5f5;
-      color: #050608;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      padding: 8px 10px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background var(--transition-fast), transform var(--transition-fast),
-        box-shadow var(--transition-fast);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
-    }
-
-    .checkout-btn:hover {
-      background: #ffffff;
-      transform: translateY(-1px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
-    }
-
-    .checkout-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
-    }
-
-    .checkout-btn:disabled {
-      background: #2a2e3a;
-      color: #7a7f8f;
-      box-shadow: none;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .footnote {
-      font-size: 10px;
-      color: #6b6f7f;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-top: 4px;
-    }
-
-    footer {
-      border-top: 1px solid var(--border-subtle);
-      padding: 10px 20px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #6b6f7f;
-    }
-
-    .footer-right {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .footer-pill {
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      padding: 4px 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .footer-pill span {
-      font-size: 10px;
-    }
-
-    .footer-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #ffffff, #777777);
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #2a2e3a;
-      border-radius: 999px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #3a3f52;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Monochrome Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: system-ui, sans-serif;
+  }
+
+  header {
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 1px solid #111;
+  }
+
+  header h1 {
+    font-size: 26px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  header p {
+    font-size: 12px;
+    opacity: 0.6;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .item {
+    background: #0a0a0a;
+    border: 1px solid #111;
+    padding: 20px;
+    border-radius: 10px;
+    transition: 0.25s ease;
+    cursor: pointer;
+  }
+
+  .item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(255,255,255,0.08);
+    border-color: #333;
+  }
+
+  .item img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .item h3 {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .item p {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+
+  .price {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #111;
+    padding: 10px 16px;
+    border-radius: 50px;
+    border: 1px solid #222;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .cart:hover {
+    background: #222;
+  }
+
+  .cart span {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+
+  .cart-count {
+    background: #fff;
+    color: #000;
+    padding: 2px 7px;
+    border-radius: 50px;
+    margin-left: 8px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  /* Cart panel */
+  #cartPanel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background: #0a0a0a;
+    border-left: 1px solid #111;
+    padding: 20px;
+    transition: 0.35s ease;
+    overflow-y: auto;
+  }
+
+  #cartPanel.open {
+    right: 0;
+  }
+
+  #cartPanel h2 {
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .cart-item {
+    border-bottom: 1px solid #111;
+    padding: 12px 0;
+  }
+
+  .cart-item-title {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .cart-item-price {
+    opacity: 0.7;
+    font-size: 13px;
+  }
+
+  .remove-btn {
+    margin-top: 6px;
+    font-size: 11px;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  .remove-btn:hover {
+    opacity: 1;
+  }
+</style>
 </head>
+
 <body>
-  <div class="app-shell">
-    <header>
-      <div class="logo">M</div>
-      <div class="brand-block">
-        <div class="brand-title">Monochrome Services</div>
-        <div class="brand-subtitle">Precision-grade digital & creative ops</div>
-      </div>
-      <div class="header-right">
-        <div class="pill">
-          <div class="pill-dot"></div>
-          <span>Live slate</span>
-        </div>
-        <button class="pill cart-pill" id="cartPill">
-          <span>Cart</span>
-          <span class="cart-count" id="cartCount">0</span>
-        </button>
-      </div>
-    </header>
 
-    <main>
-      <section class="catalog-panel">
-        <div class="catalog-header">
-          <div>
-            <div class="catalog-title">Service catalog</div>
-            <div class="catalog-sub">Curated, monochrome, high-signal only</div>
-          </div>
-        </div>
+<header>
+  <h1>Monochrome Services</h1>
+  <p>Luxury marketplace</p>
+</header>
 
-        <div class="search-row">
-          <div class="search-input-wrap">
-            <span class="search-icon">⌕</span>
-            <input
-              type="text"
-              class="search-input"
-              id="searchInput"
-              placeholder="Search services, keywords, or tags"
-            />
-            <span class="search-kbd">/</span>
-          </div>
-          <div class="view-toggle">
-            <button class="view-btn active" data-view="grid">
-              <span>▦</span>Grid
-            </button>
-            <button class="view-btn" data-view="compact">
-              <span≡>≡</span>Compact
-            </button>
-          </div>
-        </div>
+<div class="cart" id="cartBtn">
+  <span>Cart</span>
+  <span class="cart-count" id="cartCount">0</span>
+</div>
 
-        <div class="filters-row">
-          <div class="chips" id="categoryChips">
-            <button class="chip active" data-category="all">All</button>
-            <button class="chip" data-category="strategy">Strategy</button>
-            <button class="chip" data-category="design">Design</button>
-            <button class="chip" data-category="engineering">Engineering</button>
-          </div>
-          <select class="sort-select" id="sortSelect">
-            <option value="featured">Featured</option>
-            <option value="price-asc">Price ↑</option>
-            <option value="price-desc">Price ↓</option>
-          </select>
-        </div>
+<div id="cartPanel">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+</div>
 
-        <div class="products-grid" id="productsGrid"></div>
-      </section>
+<div class="grid" id="productGrid"></div>
 
-      <aside class="sidebar">
-        <div>
-          <div class="sidebar-section-title">Session summary</div>
-          <div class="summary-card">
-            <div class="summary-row">
-              <span>Items selected</span>
-              <strong id="summaryItems">0</strong>
-            </div>
-            <div class="summary-row">
-              <span>Est. monthly</span>
-              <strong id="summaryMonthly">£0</strong>
-            </div>
-            <div class="summary-row summary-total">
-              <span>Total estimate</span>
-              <strong id="summaryTotal">£0</strong>
-            </div>
-            <div class="summary-tagline">
-              Pricing is indicative. We refine scope and cost during a monochrome onboarding call.
-            </div>
-            <div class="summary-badge">
-              <div class="summary-badge-dot"></div>
-              <span>Signal-only, no noise</span>
-            </div>
-          </div>
-        </div>
+<script>
+  const products = [
+    { id: 1, name: "Luxury Monogram Tote", price: 45, img: "https://via.placeholder.com/300x200?text=Bag" },
+    { id: 2, name: "Premium Leather Crossbody", price: 38, img: "https://via.placeholder.com/300x200?text=Crossbody" },
+    { id: 3, name: "Designer-Style Sneakers", price: 55, img: "https://via.placeholder.com/300x200?text=Sneakers" },
+    { id: 4, name: "Minimal Street Hoodie", price: 30, img: "https://via.placeholder.com/300x200?text=Hoodie" },
+    { id: 5, name: "Luxury Sunglasses", price: 22, img: "https://via.placeholder.com/300x200?text=Sunglasses" },
+    { id: 6, name: "Premium Leather Wallet", price: 18, img: "https://via.placeholder.com/300x200?text=Wallet" },
+    { id: 7, name: "Monogram Shoulder Bag", price: 42, img: "https://via.placeholder.com/300x200?text=Bag" },
+    { id: 8, name: "Streetwear Cargo Pants", price: 28, img: "https://via.placeholder.com/300x200?text=Cargos" },
+    { id: 9, name: "Luxury Travel Duffel", price: 60, img: "https://via.placeholder.com/300x200?text=Duffel" }
+  ];
 
-        <div>
-          <div class="sidebar-section-title">Cart</div>
-          <div class="cart-list" id="cartList">
-            <div class="cart-empty">No services pinned yet. Tap a card to add.</div>
-          </div>
-          <button class="checkout-btn" id="checkoutBtn" disabled>
-            Request monochrome proposal
-          </button>
-          <div class="footnote">
-            No payment collected here. This interface is a curated pre-brief.
-          </div>
-        </div>
-      </aside>
-    </main>
+  const grid = document.getElementById("productGrid");
+  const cartBtn = document.getElementById("cartBtn");
+  const cartPanel = document.getElementById("cartPanel");
+  const cartCount = document.getElementById("cartCount");
+  const cartItems = document.getElementById("cartItems");
 
-    <footer>
-      <div>Monochrome Services · v1.0</div>
-      <div class="footer-right">
-        <div class="footer-pill">
-          <div class="footer-dot"></div>
-          <span>Latency-optimized workflow</span>
-        </div>
-        <span>All signals, no gradients.</span>
-      </div>
-    </footer>
-  </div>
+  let cart = [];
 
-  <script>
-    const products = [
-      {
-        id: "ops-audit",
-        name: "Operational Systems Audit",
-        tag: "Foundations",
-        category: "strategy",
-        price: 1200,
-        monthly: 0,
-        featured: true,
-        badge: "Core",
-        description:
-          "A full-stack review of your digital operations, workflows, and tooling with a monochrome lens.",
-        rating: "Signal score 9.4 / 10",
-        tier: "One-time"
-      },
-      {
-        id: "brand-system",
-        name: "Monochrome Brand System",
-        tag: "Identity",
-        category: "design",
-        price: 1800,
-        monthly: 0,
-        featured: true,
-        badge: "Studio",
-        description:
-          "A minimal, high-contrast visual and verbal identity system tuned for digital-first brands.",
-        rating: "Signal score 9.7 / 10",
-        tier: "One-time"
-      },
-      {
-        id: "ux-retainer",
-        name: "UX & Interface Retainer",
-        tag: "Product",
-        category: "design",
-        price: 900,
-        monthly: 900,
-        featured: false,
-        badge: "Retainer",
-        description:
-          "Ongoing UX, UI, and interaction design support for product teams shipping weekly.",
-        rating: "Signal score 9.2 / 10",
-        tier: "Monthly"
-      },
-      {
-        id: "eng-squad",
-        name: "Embedded Engineering Squad",
-        tag: "Delivery",
-        category: "engineering",
-        price: 3200,
-        monthly: 3200,
-        featured: true,
-        badge: "Squad",
-        description:
-          "A compact, senior-heavy engineering pod that plugs directly into your roadmap.",
-        rating: "Signal score 9.5 / 10",
-        tier: "Monthly"
-      },
-      {
-        id: "perf-pass",
-        name: "Performance Hardening Pass",
-        tag: "Speed",
-        category: "engineering",
-        price: 1400,
-        monthly: 0,
-        featured: false,
-        badge: "Ops",
-        description:
-          "Profiling, refactors, and infrastructure tweaks to make your stack feel instant.",
-        rating: "Signal score 9.1 / 10",
-        tier: "One-time"
-      },
-      {
-        id: "strategy-sprint",
-        name: "Strategy Signal Sprint",
-        tag: "Direction",
-        category: "strategy",
-        price: 2100,
-        monthly: 0,
-        featured: true,
-        badge: "Sprint",
-        description:
-          "A focused, two-week sprint to clarify priorities, bets, and sequencing across your roadmap.",
-        rating: "Signal score 9.6 / 10",
-        tier: "One-time"
-      }
-    ];
-
-    const productsGrid = document.getElementById("productsGrid");
-    const searchInput = document.getElementById("searchInput");
-    const categoryChips = document.getElementById("categoryChips");
-    const sortSelect = document.getElementById("sortSelect");
-    const cartList = document.getElementById("cartList");
-    const cartCount = document.getElementById("cartCount");
-    const summaryItems = document.getElementById("summaryItems");
-    const summaryMonthly = document.getElementById("summaryMonthly");
-    const summaryTotal = document.getElementById("summaryTotal");
-    const checkoutBtn = document.getElementById("checkoutBtn");
-    const viewButtons = document.querySelectorAll(".view-btn");
-    const cartPill = document.getElementById("cartPill");
-
-    let activeCategory = "all";
-    let activeSearch = "";
-    let activeSort = "featured";
-    let cart = [];
-    let viewMode = "grid";
-
-    function formatPrice(value) {
-      return "£" + value.toLocaleString("en-GB");
-    }
-
-    function getFilteredProducts() {
-      return products
-        .filter((p) => {
-          const matchesCategory =
-            activeCategory === "all" || p.category === activeCategory;
-          const search = activeSearch.trim().toLowerCase();
-          const matchesSearch =
-            !search ||
-            p.name.toLowerCase().includes(search) ||
-            p.tag.toLowerCase().includes(search) ||
-            p.description.toLowerCase().includes(search);
-          return matchesCategory && matchesSearch;
-        })
-        .sort((a, b) => {
-          if (activeSort === "price-asc") return a.price - b.price;
-          if (activeSort === "price-desc") return b.price - a.price;
-          if (activeSort === "featured") {
-            if (a.featured && !b.featured) return -1;
-            if (!a.featured && b.featured) return 1;
-            return a.price - b.price;
-          }
-          return 0;
-        });
-    }
-
-    function renderProducts() {
-      const list = getFilteredProducts();
-      productsGrid.innerHTML = "";
-
-      list.forEach((p) => {
-        const card = document.createElement("article");
-        card.className = "product-card";
-        card.dataset.id = p.id;
-
-        const isInCart = cart.some((item) => item.id === p.id);
-
-        card.innerHTML = `
-          <div class="product-top">
-            <div>
-              <div class="product-name">${p.name}</div>
-              <div class="product-tag">${p.tag}</div>
-            </div>
-            <div class="product-price">${formatPrice(p.price)}</div>
-          </div>
-          <div class="product-meta">
-            <div class="product-pill">${p.tier}</div>
-            <div class="product-pill">${p.category}</div>
-          </div>
-          <p class="product-desc">${p.description}</p>
-          <div class="product-rating">${p.rating}</div>
-          <div class="product-cta">
-            <button class="btn-ghost" data-action="details">Details</button>
-            <button class="btn-solid" data-action="toggle-cart">
-              ${isInCart ? "Remove" : "Add"}
-            </button>
-          </div>
-          ${
-            p.badge
-              ? `
-            <div class="product-badge">
-              <div class="product-badge-dot"></div>
-              <span>${p.badge}</span>
-            </div>
-          `
-              : ""
-          }
-        `;
-
-        if (viewMode === "compact") {
-          card.style.flexDirection = "row";
-          card.style.alignItems = "center";
-          card.style.gap = "10px";
-          card.querySelector(".product-desc").style.display = "none";
-          card.querySelector(".product-rating").style.display = "none";
-        } else {
-          card.style.flexDirection = "";
-          card.querySelector(".product-desc").style.display = "";
-          card.querySelector(".product-rating").style.display = "";
-        }
-
-        card.addEventListener("click", (e) => {
-          const action = e.target.dataset.action;
-          if (!action) return;
-          e.stopPropagation();
-          if (action === "toggle-cart") {
-            toggleCart(p.id);
-          } else if (action === "details") {
-            alert(
-              p.name +
-                "\\n\\n" +
-                p.description +
-                "\\n\\nTier: " +
-                p.tier +
-                " · Category: " +
-                p.category +
-                " · " +
-                p.rating
-            );
-          }
-        });
-
-        productsGrid.appendChild(card);
-      });
-    }
-
-    function renderCart() {
-      cartList.innerHTML = "";
-      if (!cart.length) {
-        cartList.innerHTML =
-          '<div class="cart-empty">No services pinned yet. Tap a card to add.</div>';
-        return;
-      }
-
-      cart.forEach((item) => {
-        const row = document.createElement("div");
-        row.className = "cart-item";
-        row.innerHTML = `
-          <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-price">${formatPrice(item.price)}</div>
-          <div class="cart-item-meta">${item.tier} · ${item.category}</div>
-          <button class="cart-item-remove" data-id="${item.id}">Remove</button>
-        `;
-        row
-          .querySelector(".cart-item-remove")
-          .addEventListener("click", () => toggleCart(item.id));
-        cartList.appendChild(row);
-      });
-    }
-
-    function updateSummary() {
-      const items = cart.length;
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      const monthly = cart.reduce((sum, item) => sum + (item.monthly || 0), 0);
-
-      summaryItems.textContent = items;
-      summaryTotal.textContent = formatPrice(total);
-      summaryMonthly.textContent = formatPrice(monthly);
-      cartCount.textContent = items;
-      checkoutBtn.disabled = items === 0;
-    }
-
-    function toggleCart(id) {
-      const index = cart.findIndex((item) => item.id === id);
-      if (index >= 0) {
-        cart.splice(index, 1);
-      } else {
-        const product = products.find((p) => p.id === id);
-        if (product) cart.push(product);
-      }
-      renderProducts();
-      renderCart();
-      updateSummary();
-    }
-
-    searchInput.addEventListener("input", (e) => {
-      activeSearch = e.target.value;
-      renderProducts();
+  function renderProducts() {
+    grid.innerHTML = "";
+    products.forEach(p => {
+      const item = document.createElement("div");
+      item.className = "item";
+      item.innerHTML = `
+        <img src="${p.img}">
+        <h3>${p.name}</h3>
+        <p class="price">£${p.price}</p>
+      `;
+      item.onclick = () => addToCart(p);
+      grid.appendChild(item);
     });
+  }
 
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "/" && document.activeElement !== searchInput) {
-        e.preventDefault();
-        searchInput.focus();
-      }
+  function addToCart(product) {
+    cart.push(product);
+    updateCart();
+  }
+
+  function updateCart() {
+    cartCount.textContent = cart.length;
+    cartItems.innerHTML = "";
+
+    cart.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <div class="cart-item-title">${item.name}</div>
+        <div class="cart-item-price">£${item.price}</div>
+        <div class="remove-btn" onclick="removeItem(${index})">Remove</div>
+      `;
+      cartItems.appendChild(div);
     });
+  }
 
-    categoryChips.addEventListener("click", (e) => {
-      const chip = e.target.closest(".chip");
-      if (!chip) return;
-      activeCategory = chip.dataset.category;
-      categoryChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-      chip.classList.add("active");
-      renderProducts();
-    });
+  function removeItem(i) {
+    cart.splice(i, 1);
+    updateCart();
+  }
 
-    sortSelect.addEventListener("change", (e) => {
-      activeSort = e.target.value;
-      renderProducts();
-    });
+  cartBtn.onclick = () => {
+    cartPanel.classList.toggle("open");
+  };
 
-    viewButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        viewButtons.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        viewMode = btn.dataset.view;
-        renderProducts();
-      });
-    });
+  renderProducts();
+</script>
 
-    checkoutBtn.addEventListener("click", () => {
-      if (!cart.length) return;
-      const names = cart.map((c) => c.name).join(", ");
-      alert(
-        "Monochrome proposal request created for:\\n\\n" +
-          names +
-          "\\n\\nIn a real flow, this would open a form or send your slate."
-      );
-    });
-
-    cartPill.addEventListener("click", () => {
-      const sidebar = document.querySelector(".sidebar");
-      sidebar.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-
-    renderProducts();
-    renderCart();
-    updateSummary();
-  </script>
 </body>
 </html>
