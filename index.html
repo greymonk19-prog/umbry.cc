@@ -11,10 +11,11 @@
     background: #000;
     color: #fff;
     font-family: system-ui, sans-serif;
+    scroll-behavior: smooth;
   }
 
   header {
-    padding: 30px 20px;
+    padding: 30px 20px 10px;
     text-align: center;
     border-bottom: 1px solid #111;
   }
@@ -33,11 +34,46 @@
     text-transform: uppercase;
   }
 
+  /* NAVIGATION */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px 0;
+    border-bottom: 1px solid #111;
+  }
+
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: 0.2s ease;
+  }
+
+  nav a:hover {
+    opacity: 1;
+  }
+
+  /* SECTION TITLES */
+  .section-title {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  /* PRODUCT GRID */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
-    padding: 30px;
+    padding: 20px;
     max-width: 1200px;
     margin: auto;
   }
@@ -70,17 +106,12 @@
     margin-bottom: 6px;
   }
 
-  .item p {
-    font-size: 13px;
-    opacity: 0.7;
-    margin-bottom: 10px;
-  }
-
   .price {
     font-size: 15px;
     font-weight: bold;
   }
 
+  /* CART BUTTON */
   .cart {
     position: fixed;
     top: 20px;
@@ -91,15 +122,11 @@
     border: 1px solid #222;
     cursor: pointer;
     transition: 0.2s ease;
+    z-index: 999;
   }
 
   .cart:hover {
     background: #222;
-  }
-
-  .cart span {
-    font-size: 13px;
-    letter-spacing: 0.1em;
   }
 
   .cart-count {
@@ -112,7 +139,7 @@
     font-weight: bold;
   }
 
-  /* Cart panel */
+  /* CART PANEL */
   #cartPanel {
     position: fixed;
     top: 0;
@@ -124,6 +151,7 @@
     padding: 20px;
     transition: 0.35s ease;
     overflow-y: auto;
+    z-index: 999;
   }
 
   #cartPanel.open {
@@ -140,16 +168,6 @@
   .cart-item {
     border-bottom: 1px solid #111;
     padding: 12px 0;
-  }
-
-  .cart-item-title {
-    font-size: 14px;
-    letter-spacing: 0.1em;
-  }
-
-  .cart-item-price {
-    opacity: 0.7;
-    font-size: 13px;
   }
 
   .remove-btn {
@@ -172,9 +190,15 @@
   <p>Luxury marketplace</p>
 </header>
 
+<nav>
+  <a href="#bags">Bags</a>
+  <a href="#footwear">Footwear</a>
+  <a href="#clothes">Clothes</a>
+  <a href="#accessories">Accessories</a>
+</nav>
+
 <div class="cart" id="cartBtn">
-  <span>Cart</span>
-  <span class="cart-count" id="cartCount">0</span>
+  Cart <span class="cart-count" id="cartCount">0</span>
 </div>
 
 <div id="cartPanel">
@@ -182,32 +206,53 @@
   <div id="cartItems"></div>
 </div>
 
-<div class="grid" id="productGrid"></div>
+<!-- BAGS -->
+<h2 class="section-title" id="bags">Bags</h2>
+<div class="grid" id="bagsGrid"></div>
+
+<!-- FOOTWEAR -->
+<h2 class="section-title" id="footwear">Footwear</h2>
+<div class="grid" id="footwearGrid"></div>
+
+<!-- CLOTHES -->
+<h2 class="section-title" id="clothes">Clothes</h2>
+<div class="grid" id="clothesGrid"></div>
+
+<!-- ACCESSORIES -->
+<h2 class="section-title" id="accessories">Accessories</h2>
+<div class="grid" id="accessoriesGrid"></div>
 
 <script>
-  const products = [
-    { id: 1, name: "Luxury Monogram Tote", price: 45, img: "https://via.placeholder.com/300x200?text=Bag" },
-    { id: 2, name: "Premium Leather Crossbody", price: 38, img: "https://via.placeholder.com/300x200?text=Crossbody" },
-    { id: 3, name: "Designer-Style Sneakers", price: 55, img: "https://via.placeholder.com/300x200?text=Sneakers" },
-    { id: 4, name: "Minimal Street Hoodie", price: 30, img: "https://via.placeholder.com/300x200?text=Hoodie" },
-    { id: 5, name: "Luxury Sunglasses", price: 22, img: "https://via.placeholder.com/300x200?text=Sunglasses" },
-    { id: 6, name: "Premium Leather Wallet", price: 18, img: "https://via.placeholder.com/300x200?text=Wallet" },
-    { id: 7, name: "Monogram Shoulder Bag", price: 42, img: "https://via.placeholder.com/300x200?text=Bag" },
-    { id: 8, name: "Streetwear Cargo Pants", price: 28, img: "https://via.placeholder.com/300x200?text=Cargos" },
-    { id: 9, name: "Luxury Travel Duffel", price: 60, img: "https://via.placeholder.com/300x200?text=Duffel" }
-  ];
+  const products = {
+    bags: [
+      { name: "Luxury Monogram Tote", price: 45, img: "https://via.placeholder.com/300x200?text=Tote" },
+      { name: "Premium Leather Crossbody", price: 38, img: "https://via.placeholder.com/300x200?text=Crossbody" },
+      { name: "Monogram Shoulder Bag", price: 42, img: "https://via.placeholder.com/300x200?text=Bag" }
+    ],
+    footwear: [
+      { name: "Designer-Style Sneakers", price: 55, img: "https://via.placeholder.com/300x200?text=Sneakers" },
+      { name: "Minimal Street Runners", price: 48, img: "https://via.placeholder.com/300x200?text=Runners" }
+    ],
+    clothes: [
+      { name: "Minimal Street Hoodie", price: 30, img: "https://via.placeholder.com/300x200?text=Hoodie" },
+      { name: "Streetwear Cargo Pants", price: 28, img: "https://via.placeholder.com/300x200?text=Cargos" }
+    ],
+    accessories: [
+      { name: "Luxury Sunglasses", price: 22, img: "https://via.placeholder.com/300x200?text=Sunglasses" },
+      { name: "Premium Leather Wallet", price: 18, img: "https://via.placeholder.com/300x200?text=Wallet" }
+    ]
+  };
 
-  const grid = document.getElementById("productGrid");
-  const cartBtn = document.getElementById("cartBtn");
-  const cartPanel = document.getElementById("cartPanel");
+  const cart = [];
   const cartCount = document.getElementById("cartCount");
   const cartItems = document.getElementById("cartItems");
+  const cartPanel = document.getElementById("cartPanel");
 
-  let cart = [];
-
-  function renderProducts() {
+  function renderSection(section, elementId) {
+    const grid = document.getElementById(elementId);
     grid.innerHTML = "";
-    products.forEach(p => {
+
+    products[section].forEach((p, index) => {
       const item = document.createElement("div");
       item.className = "item";
       item.innerHTML = `
@@ -233,8 +278,8 @@
       const div = document.createElement("div");
       div.className = "cart-item";
       div.innerHTML = `
-        <div class="cart-item-title">${item.name}</div>
-        <div class="cart-item-price">£${item.price}</div>
+        <div>${item.name}</div>
+        <div>£${item.price}</div>
         <div class="remove-btn" onclick="removeItem(${index})">Remove</div>
       `;
       cartItems.appendChild(div);
@@ -246,11 +291,14 @@
     updateCart();
   }
 
-  cartBtn.onclick = () => {
+  document.getElementById("cartBtn").onclick = () => {
     cartPanel.classList.toggle("open");
   };
 
-  renderProducts();
+  renderSection("bags", "bagsGrid");
+  renderSection("footwear", "footwearGrid");
+  renderSection("clothes", "clothesGrid");
+  renderSection("accessories", "accessoriesGrid");
 </script>
 
 </body>
