@@ -1,9 +1,913 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=https://guns.lol/tokyooooooo">
-  <title>Redirecting...</title>
+  <meta charset="UTF-8" />
+  <title>Kukirin Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-alt: #111;
+      --card: #181818;
+      --accent: #f5f5f5;
+      --accent-soft: #b3b3b3;
+      --border: #2a2a2a;
+      --danger: #ff4d4d;
+      --radius: 10px;
+      --shadow-soft: 0 14px 40px rgba(0,0,0,0.45);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                   "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #202020 0, #050505 55%);
+      color: var(--accent);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+      width: 100%;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffb347, #ffcc33);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #111;
+      font-size: 18px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+    }
+
+    .logo-text-main {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 18px;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--accent-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--accent-soft);
+      background: rgba(0,0,0,0.4);
+    }
+
+    .cart-button {
+      position: relative;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #111;
+      color: var(--accent);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .cart-count {
+      min-width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: #000;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 22px;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-main {
+      background: radial-gradient(circle at top left, #262626 0, #111 55%);
+      border-radius: 18px;
+      padding: 20px 18px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-soft);
+    }
+
+    .hero-title {
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .hero-title span {
+      color: #ffcc33;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--accent-soft);
+      max-width: 420px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .hero-meta-item {
+      font-size: 11px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--accent-soft);
+      background: rgba(0,0,0,0.4);
+    }
+
+    .hero-secondary {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-card {
+      background: #111;
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-card-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .hero-card-sub {
+      font-size: 12px;
+      color: var(--accent-soft);
+    }
+
+    .hero-card-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .hero-card-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--accent-soft);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: var(--accent-soft);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .product-image {
+      height: 150px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top, #333 0, #111 55%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--accent-soft);
+    }
+
+    .product-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .product-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--accent-soft);
+    }
+
+    .product-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffcc33;
+    }
+
+    .product-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.6);
+      margin-right: 4px;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      gap: 8px;
+    }
+
+    .product-cta {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      background: #fff;
+      color: #000;
+    }
+
+    .product-cta-secondary {
+      font-size: 11px;
+      color: var(--accent-soft);
+    }
+
+    /* Cart drawer */
+
+    .cart-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: stretch;
+      justify-content: flex-end;
+      z-index: 40;
+    }
+
+    .cart-drawer-backdrop.open {
+      display: flex;
+    }
+
+    .cart-drawer {
+      width: 100%;
+      max-width: 380px;
+      background: #050505;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      box-shadow: -18px 0 40px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .cart-header {
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-title {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .cart-close {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #111;
+      color: var(--accent-soft);
+      font-size: 11px;
+      padding: 4px 9px;
+      cursor: pointer;
+    }
+
+    .cart-body {
+      padding: 12px 16px 16px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cart-empty {
+      font-size: 13px;
+      color: var(--accent-soft);
+      margin-top: 10px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px;
+    }
+
+    .cart-item-name {
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    .cart-item-meta {
+      color: var(--accent-soft);
+      font-size: 11px;
+    }
+
+    .cart-item-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+    }
+
+    .cart-item-price {
+      font-weight: 600;
+      color: #ffcc33;
+      font-size: 13px;
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .qty-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: #050505;
+      color: var(--accent-soft);
+      cursor: pointer;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-remove {
+      font-size: 11px;
+      color: var(--danger);
+      cursor: pointer;
+    }
+
+    .cart-summary {
+      padding: 10px 16px 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .cart-summary-label {
+      color: var(--accent-soft);
+    }
+
+    .cart-summary-total {
+      font-weight: 600;
+    }
+
+    .checkout-button {
+      margin-top: 6px;
+      border-radius: 999px;
+      border: none;
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      color: #000;
+      width: 100%;
+    }
+
+    /* Address / checkout form */
+
+    .checkout-form {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checkout-form.visible {
+      display: flex;
+    }
+
+    .checkout-form-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .field label {
+      font-size: 11px;
+      color: var(--accent-soft);
+    }
+
+    .field input,
+    .field select {
+      border-radius: 7px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: #050505;
+      color: var(--accent);
+      padding: 7px 8px;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #ffcc33;
+    }
+
+    .checkout-submit {
+      margin-top: 6px;
+      border-radius: 999px;
+      border: none;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #ffcc33;
+      color: #000;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      font-size: 11px;
+      color: var(--accent-soft);
+      text-align: center;
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">K</div>
+        <div>
+          <div class="logo-text-main">Kukirin Store</div>
+          <div class="logo-text-sub">Electric rides, human design</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="pill">UK shipping • Klarna‑friendly layout</div>
+        <button class="cart-button" id="openCart">
+          <span>Cart</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-main">
+        <div class="hero-tag">Kukirin electric scooters</div>
+        <div class="hero-title">
+          Built for real streets,<br />
+          <span>not spec sheets.</span>
+        </div>
+        <p class="hero-sub">
+          Simple, honest product cards. No noise, no fake urgency—just Kukirin models,
+          real range, and clear pricing.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">Next‑day dispatch on in‑stock units</div>
+          <div class="hero-meta-item">Secure checkout • Card & PayPal</div>
+          <div class="hero-meta-item">Support from actual humans</div>
+        </div>
+      </div>
+      <div class="hero-secondary">
+        <div class="hero-card">
+          <div class="hero-card-title">How this store works</div>
+          <div class="hero-card-sub">
+            Pick a Kukirin, add it to your cart, drop your address, and we’ll handle the rest.
+          </div>
+          <div class="hero-card-pill-row">
+            <div class="hero-card-pill">Transparent totals</div>
+            <div class="hero-card-pill">No surprise fees</div>
+            <div class="hero-card-pill">Easy to edit cart</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-title">Real‑world details</div>
+          <div class="hero-card-sub">
+            We highlight things that actually matter: range, weight, brakes, and how it feels to ride.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-title">Kukirin lineup</div>
+        <div class="section-sub">Tap a card to learn more, or add straight to cart.</div>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products are injected by JS so you can easily edit the list -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Cart drawer -->
+  <div class="cart-drawer-backdrop" id="cartDrawerBackdrop">
+    <div class="cart-drawer">
+      <div class="cart-header">
+        <div class="cart-title">Your cart</div>
+        <button class="cart-close" id="closeCart">Close</button>
+      </div>
+      <div class="cart-body">
+        <div id="cartItems"></div>
+        <div class="cart-empty" id="cartEmpty">Your cart is empty. Add a Kukirin to get started.</div>
+      </div>
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span class="cart-summary-label">Subtotal</span>
+          <span class="cart-summary-total" id="cartSubtotal">£0</span>
+        </div>
+        <button class="checkout-button" id="toggleCheckout">Add address & checkout</button>
+
+        <form class="checkout-form" id="checkoutForm">
+          <div class="checkout-form-title">Shipping details</div>
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input id="fullName" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="addressLine1">Address line 1</label>
+            <input id="addressLine1" placeholder="House number & street" required />
+          </div>
+          <div class="field">
+            <label for="addressLine2">Address line 2 (optional)</label>
+            <input id="addressLine2" placeholder="Flat, building, etc." />
+          </div>
+          <div class="field">
+            <label for="city">Town / City</label>
+            <input id="city" placeholder="e.g. Fleet" required />
+          </div>
+          <div class="field">
+            <label for="postcode">Postcode</label>
+            <input id="postcode" placeholder="e.g. GU51" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone (for courier)</label>
+            <input id="phone" placeholder="Optional but helpful" />
+          </div>
+          <button type="submit" class="checkout-submit">Place order request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Kukirin Store • Layout ready for your real product list and colourways.
+  </footer>
+
+  <script>
+    // --- Simple product data (easy to edit later) ---
+    // TODO: when you have the real Kukirin models + colourways,
+    // just replace this array.
+    const products = [
+      {
+        id: "kukirin-g2-master",
+        name: "Kukirin G2 Master",
+        price: 899,
+        range: "Up to 70 km",
+        topSpeed: "45 km/h",
+        color: "Stealth Grey",
+        colorHex: "#555555"
+      },
+      {
+        id: "kukirin-g2-pro",
+        name: "Kukirin G2 Pro",
+        price: 749,
+        range: "Up to 60 km",
+        topSpeed: "40 km/h",
+        color: "Matte Black",
+        colorHex: "#111111"
+      },
+      {
+        id: "kukirin-m4-pro",
+        name: "Kukirin M4 Pro",
+        price: 599,
+        range: "Up to 50 km",
+        topSpeed: "35 km/h",
+        color: "Urban Grey",
+        colorHex: "#666666"
+      },
+      {
+        id: "kukirin-g3",
+        name: "Kukirin G3",
+        price: 999,
+        range: "Up to 80 km",
+        topSpeed: "50 km/h",
+        color: "Night Black",
+        colorHex: "#000000"
+      }
+    ];
+
+    const productGrid = document.getElementById("productGrid");
+    const cartDrawerBackdrop = document.getElementById("cartDrawerBackdrop");
+    const openCartBtn = document.getElementById("openCart");
+    const closeCartBtn = document.getElementById("closeCart");
+    const cartCountEl = document.getElementById("cartCount");
+    const cartItemsEl = document.getElementById("cartItems");
+    const cartEmptyEl = document.getElementById("cartEmpty");
+    const cartSubtotalEl = document.getElementById("cartSubtotal");
+    const toggleCheckoutBtn = document.getElementById("toggleCheckout");
+    const checkoutForm = document.getElementById("checkoutForm");
+
+    let cart = [];
+
+    function renderProducts() {
+      productGrid.innerHTML = "";
+      products.forEach((p) => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div class="product-image">
+            <span>${p.name}</span>
+          </div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-meta-row">
+            <span>${p.range}</span>
+            <span>${p.topSpeed}</span>
+          </div>
+          <div class="product-meta-row">
+            <span>
+              <span class="product-color-dot" style="background:${p.colorHex}"></span>
+              ${p.color}
+            </span>
+            <span class="product-price">£${p.price}</span>
+          </div>
+          <div class="product-footer">
+            <button class="product-cta" data-id="${p.id}">Add to cart</button>
+            <span class="product-cta-secondary">Tap for details (future)</span>
+          </div>
+        `;
+        productGrid.appendChild(card);
+      });
+
+      productGrid.addEventListener("click", (e) => {
+        const btn = e.target.closest(".product-cta");
+        if (!btn) return;
+        const id = btn.getAttribute("data-id");
+        addToCart(id);
+      });
+    }
+
+    function addToCart(productId) {
+      const existing = cart.find((item) => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        const product = products.find((p) => p.id === productId);
+        if (!product) return;
+        cart.push({ ...product, qty: 1 });
+      }
+      renderCart();
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartCountEl.textContent = count;
+    }
+
+    function renderCart() {
+      cartItemsEl.innerHTML = "";
+      if (cart.length === 0) {
+        cartEmptyEl.style.display = "block";
+      } else {
+        cartEmptyEl.style.display = "none";
+      }
+
+      let subtotal = 0;
+
+      cart.forEach((item) => {
+        subtotal += item.price * item.qty;
+        const row = document.createElement("div");
+        row.className = "cart-item";
+        row.innerHTML = `
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-meta">
+              <span>${item.color}</span> • <span>${item.range}</span>
+            </div>
+            <div class="cart-item-remove" data-id="${item.id}">Remove</div>
+          </div>
+          <div class="cart-item-right">
+            <div class="cart-item-price">£${item.price * item.qty}</div>
+            <div class="cart-item-qty">
+              <button class="qty-btn" data-id="${item.id}" data-delta="-1">−</button>
+              <span>${item.qty}</span>
+              <button class="qty-btn" data-id="${item.id}" data-delta="1">+</button>
+            </div>
+          </div>
+        `;
+        cartItemsEl.appendChild(row);
+      });
+
+      cartSubtotalEl.textContent = "£" + subtotal;
+      updateCartCount();
+    }
+
+    function openCart() {
+      cartDrawerBackdrop.classList.add("open");
+    }
+
+    function closeCart() {
+      cartDrawerBackdrop.classList.remove("open");
+    }
+
+    openCartBtn.addEventListener("click", openCart);
+    closeCartBtn.addEventListener("click", closeCart);
+    cartDrawerBackdrop.addEventListener("click", (e) => {
+      if (e.target === cartDrawerBackdrop) closeCart();
+    });
+
+    cartItemsEl.addEventListener("click", (e) => {
+      const qtyBtn = e.target.closest(".qty-btn");
+      const removeBtn = e.target.closest(".cart-item-remove");
+
+      if (qtyBtn) {
+        const id = qtyBtn.getAttribute("data-id");
+        const delta = parseInt(qtyBtn.getAttribute("data-delta"), 10);
+        const item = cart.find((i) => i.id === id);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) {
+          cart = cart.filter((i) => i.id !== id);
+        }
+        renderCart();
+      }
+
+      if (removeBtn) {
+        const id = removeBtn.getAttribute("data-id");
+        cart = cart.filter((i) => i.id !== id);
+        renderCart();
+      }
+    });
+
+    toggleCheckoutBtn.addEventListener("click", () => {
+      checkoutForm.classList.toggle("visible");
+    });
+
+    checkoutForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+      const order = {
+        items: cart,
+        name: document.getElementById("fullName").value,
+        address1: document.getElementById("addressLine1").value,
+        address2: document.getElementById("addressLine2").value,
+        city: document.getElementById("city").value,
+        postcode: document.getElementById("postcode").value,
+        phone: document.getElementById("phone").value
+      };
+      console.log("Order payload (send this to backend):", order);
+      alert("Order request captured in console. Hook this into your backend / email.");
+    });
+
+    renderProducts();
+    renderCart();
+  </script>
 </body>
 </html>
