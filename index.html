@@ -5,9 +5,7 @@
   <title>rosé’s gfx commissions</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -63,9 +61,7 @@
       margin: 18px 0 8px;
     }
 
-    .question {
-      margin-bottom: 16px;
-    }
+    .question { margin-bottom: 16px; }
 
     .question-label {
       display: block;
@@ -83,7 +79,6 @@
 
     input[type="text"],
     input[type="email"],
-    select,
     textarea {
       width: 100%;
       padding: 9px 11px;
@@ -95,10 +90,7 @@
       background: #fff;
     }
 
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    select:focus,
-    textarea:focus {
+    input:focus, textarea:focus {
       border-color: #ff8fb8;
       box-shadow: 0 0 0 2px rgba(255, 143, 184, 0.25);
     }
@@ -150,34 +142,6 @@
       flex-wrap: wrap;
     }
 
-    .row .question {
-      flex: 1;
-    }
-
-    .price-preview {
-      margin-top: 6px;
-      font-size: 0.85rem;
-      color: #ff4f9a;
-      font-weight: 500;
-    }
-
-    .footer {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      color: #555;
-    }
-
     .submit-btn {
       border: none;
       padding: 9px 18px;
@@ -189,16 +153,13 @@
       cursor: pointer;
       box-shadow: 0 8px 18px rgba(255, 79, 154, 0.4);
       transition: 0.2s ease;
+      width: 100%;
+      margin-top: 20px;
     }
 
     .submit-btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 10px 22px rgba(255, 79, 154, 0.5);
-    }
-
-    .submit-btn:active {
-      transform: translateY(1px);
-      box-shadow: 0 4px 10px rgba(255, 79, 154, 0.4);
     }
 
     .char-count {
@@ -207,149 +168,99 @@
       text-align: right;
       margin-top: 2px;
     }
-
-    @media (max-width: 520px) {
-      .title {
-        font-size: 2rem;
-      }
-    }
   </style>
 </head>
 <body>
+
   <div class="container">
     <div class="pill">✨ order your dream gfx ✨</div>
     <h1 class="title">rosé’s gfx commissions</h1>
     <p class="subtitle">this is where you order my commissions — be as detailed and creative as you want! 🌸</p>
 
-    <!-- SECTION: TYPE -->
+    <!-- TYPE -->
     <div class="section-title">commission type</div>
-
     <div class="question">
-      <span class="question-label">Advanced or Basic? *</span>
-      <span class="hint">advanced = more effects, details & time • basic = clean & simple</span>
-      <div class="options" id="type-options">
+      <span class="question-label">Advanced or Basic?</span>
+      <div class="options">
         <div class="option-pill">
-          <input type="radio" name="type" id="advanced" value="Advanced" />
+          <input type="radio" name="type" id="advanced" value="Advanced">
           <label for="advanced">Advanced</label>
         </div>
         <div class="option-pill">
-          <input type="radio" name="type" id="basic" value="Basic" />
+          <input type="radio" name="type" id="basic" value="Basic">
           <label for="basic">Basic</label>
         </div>
       </div>
-      <div class="price-preview" id="price-preview">pick a type to see a rough price ✨</div>
     </div>
 
-    <!-- SECTION: CONTACT -->
+    <!-- CONTACT -->
     <div class="section-title">contact info</div>
-
     <div class="row">
       <div class="question">
-        <label class="question-label" for="discord">What is your Discord? *</label>
-        <span class="hint">example: user#0000</span>
-        <input type="text" id="discord" name="discord" placeholder="your discord tag" />
+        <label class="question-label">Discord</label>
+        <input type="text" id="discord">
       </div>
 
       <div class="question">
-        <label class="question-label" for="roblox">What is your Roblox username? *</label>
-        <input type="text" id="roblox" name="roblox" placeholder="your roblox @username" />
+        <label class="question-label">Roblox Username</label>
+        <input type="text" id="roblox">
       </div>
     </div>
 
-    <div class="question">
-      <label class="question-label" for="email">Optional email (for backup contact)</label>
-      <input type="email" id="email" name="email" placeholder="you@example.com" />
-    </div>
-
-    <!-- SECTION: VISUAL DETAILS -->
+    <!-- VISUAL -->
     <div class="section-title">visual details</div>
 
     <div class="question">
-      <label class="question-label" for="main-colours">What are the main colours you want? *</label>
-      <span class="hint">you can say “pastel pink + white” or “neon blue + black”, etc.</span>
-      <input type="text" id="main-colours" name="main-colours" placeholder="list your main colours here" />
+      <label class="question-label">Main Colours</label>
+      <input type="text" id="main-colours">
     </div>
 
     <div class="question">
-      <label class="question-label" for="theme">What is the overall theme/vibe? *</label>
-      <span class="hint">examples: cottagecore, cyber, anime, dreamy, grunge, kawaii, etc.</span>
-      <input type="text" id="theme" name="theme" placeholder="describe the vibe you want" />
+      <label class="question-label">Theme / Vibe</label>
+      <input type="text" id="theme">
     </div>
 
     <div class="question">
-      <label class="question-label" for="pose">What pose or expression do you want?</label>
-      <span class="hint">standing, sitting, looking at the ceiling, laughing, mysterious, etc.</span>
-      <input type="text" id="pose" name="pose" placeholder="pose / expression ideas" />
+      <label class="question-label">Pose / Expression</label>
+      <input type="text" id="pose">
     </div>
 
     <div class="question">
-      <label class="question-label" for="background">Background style *</label>
-      <span class="hint">solid colour, detailed scene, blurred city, bedroom, sky, abstract shapes, etc.</span>
-      <input type="text" id="background" name="background" placeholder="describe your background" />
+      <label class="question-label">Background</label>
+      <input type="text" id="background">
     </div>
 
-    <!-- SECTION: EXTRA INFO -->
+    <!-- EXTRA -->
     <div class="section-title">extra info</div>
 
     <div class="question">
-      <label class="question-label" for="text">Any text you want on the gfx?</label>
-      <span class="hint">username, quote, short phrase, etc.</span>
-      <input type="text" id="text" name="text" placeholder="e.g. “rosé • gfx queen”" />
+      <label class="question-label">Text on GFX</label>
+      <input type="text" id="text">
     </div>
 
     <div class="question">
-      <label class="question-label" for="details">Extra details / references *</label>
-      <span class="hint">drop anything important: mood, inspo links, must-have items, specific outfit pieces, etc.</span>
-      <textarea id="details" name="details" maxlength="400" placeholder="tell me everything you want here 💕"></textarea>
+      <label class="question-label">Extra Details</label>
+      <textarea id="details" maxlength="400"></textarea>
       <div class="char-count" id="char-count">0 / 400 characters</div>
     </div>
 
     <div class="row">
       <div class="question">
-        <label class="question-label" for="deadline">When do you roughly need it by?</label>
-        <span class="hint">this is just to help me plan, not a strict promise</span>
-        <input type="text" id="deadline" name="deadline" placeholder="example: “in 1–2 weeks”" />
+        <label class="question-label">Deadline</label>
+        <input type="text" id="deadline">
       </div>
 
       <div class="question">
-        <label class="question-label" for="timezone">What is your timezone?</label>
-        <span class="hint">so I know when you’re awake 😎</span>
-        <input type="text" id="timezone" name="timezone" placeholder="example: GMT, EST, PST" />
+        <label class="question-label">Timezone</label>
+        <input type="text" id="timezone">
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-      <div class="checkbox-row">
-        <input type="checkbox" id="agree" />
-        <label for="agree">I understand this is a request form and not instant delivery 💌</label>
-      </div>
-      <button class="submit-btn" type="button" onclick="submitForm()">send commission request ✨</button>
-    </div>
+    <button class="submit-btn" onclick="submitForm()">send commission request ✨</button>
   </div>
 
   <script>
-    // price preview based on advanced/basic
-    const typeOptions = document.getElementById("type-options");
-    const pricePreview = document.getElementById("price-preview");
-
-    typeOptions.addEventListener("click", (e) => {
-      const target = e.target;
-      if (target.tagName.toLowerCase() === "label") {
-        const forId = target.getAttribute("for");
-        const input = document.getElementById(forId);
-        if (!input) return;
-        input.checked = true;
-
-        if (input.value === "Advanced") {
-          pricePreview.textContent = "rough estimate: advanced gfx usually costs more (extra effects & time) ✨";
-        } else if (input.value === "Basic") {
-          pricePreview.textContent = "rough estimate: basic gfx is simpler & more budget-friendly 💗";
-        }
-      }
-    });
-
-    // character counter for extra details
+    // character counter
     const details = document.getElementById("details");
     const charCount = document.getElementById("char-count");
 
@@ -357,10 +268,40 @@
       charCount.textContent = `${details.value.length} / ${details.maxLength} characters`;
     });
 
-    // fake submit (you can hook this to backend or Google Apps Script later)
+    // submit + redirect
     function submitForm() {
-      alert("your commission request has been ‘sent’ 💌\n\n(this is just a demo alert for now!)");
+      const type = document.querySelector('input[name="type"]:checked')?.value || "Not specified";
+      const discord = document.getElementById("discord").value;
+      const roblox = document.getElementById("roblox").value;
+      const colours = document.getElementById("main-colours").value;
+      const theme = document.getElementById("theme").value;
+      const pose = document.getElementById("pose").value;
+      const background = document.getElementById("background").value;
+      const gfxtext = document.getElementById("text").value;
+      const detailsText = document.getElementById("details").value;
+      const deadline = document.getElementById("deadline").value;
+      const timezone = document.getElementById("timezone").value;
+
+      const paragraph =
+        `Commission Request:\n\n` +
+        `• Type: ${type}\n` +
+        `• Discord: ${discord}\n` +
+        `• Roblox Username: ${roblox}\n\n` +
+        `• Main Colours: ${colours}\n` +
+        `• Theme / Vibe: ${theme}\n` +
+        `• Pose / Expression: ${pose}\n` +
+        `• Background: ${background}\n\n` +
+        `• Text on GFX: ${gfxtext}\n\n` +
+        `Extra Details:\n${detailsText}\n\n` +
+        `• Deadline: ${deadline}\n` +
+        `• Timezone: ${timezone}\n\n` +
+        `Please DM Bucketey on Discord and paste this message.`;
+
+      const encoded = encodeURIComponent(paragraph);
+
+      window.location.href = `https://umbry.cc/dm?data=${encoded}`;
     }
   </script>
+
 </body>
 </html>
