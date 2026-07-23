@@ -26,6 +26,13 @@
       padding: 24px 28px 30px;
       border: 1px solid #ffd1ec;
       backdrop-filter: blur(6px);
+      text-align: center;
+    }
+
+    .lotus {
+      width: 120px;
+      margin: 0 auto 10px;
+      display: block;
     }
 
     .title {
@@ -59,9 +66,10 @@
       font-weight: 600;
       color: #ff4f9a;
       margin: 18px 0 8px;
+      text-align: left;
     }
 
-    .question { margin-bottom: 16px; }
+    .question { margin-bottom: 16px; text-align: left; }
 
     .question-label {
       display: block;
@@ -71,14 +79,7 @@
       color: #333;
     }
 
-    .hint {
-      font-size: 0.8rem;
-      color: #777;
-      margin-bottom: 4px;
-    }
-
     input[type="text"],
-    input[type="email"],
     textarea {
       width: 100%;
       padding: 9px 11px;
@@ -173,6 +174,10 @@
 <body>
 
   <div class="container">
+
+    <!-- LOTUS IMAGE -->
+    <img class="lotus" src="https://png.pngtree.com/png-vector/20260510/ourmid/pngtree-pink-lotus-flower-in-full-bloom-with-delicate-petals-png-image_19273100.webp" alt="lotus">
+
     <div class="pill">✨ order your dream gfx ✨</div>
     <h1 class="title">rosé’s gfx commissions</h1>
     <p class="subtitle">this is where you order my commissions — be as detailed and creative as you want! 🌸</p>
@@ -301,7 +306,6 @@
 
       window.location.href = `https://umbry.cc/dm?data=${encoded}`;
     }
-    <img src="https://pngtree.com/so/a-delicate-pink-lotus-flower" class="icon">
   </script>
 
 </body>
