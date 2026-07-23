@@ -1,1 +1,114 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send to Bucketey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #ffe4f4);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      border: 1px solid #ffd1ec;
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      font-family: "Pacifico", cursive;
+      color: #ff8fb8;
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    #output {
+      white-space: pre-wrap;
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #ffc1e4;
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(to right, #ff8fb8, #ff4f9a);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(255, 79, 154, 0.4);
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(255, 79, 154, 0.5);
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(255, 79, 154, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>send to bucketey 💌</h1>
+    <p>add <strong>Bucketey</strong> on Discord and paste the message below into their DMs.</p>
+
+    <div id="output">Loading your commission details…</div>
+
+    <button onclick="copyText()">copy message ✨</button>
+  </div>
+
+  <script>
+    // Get ?data= from URL
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get("data");
+
+    const outputBox = document.getElementById("output");
+
+    if (data) {
+      outputBox.textContent = decodeURIComponent(data);
+    } else {
+      outputBox.textContent = "No commission data found. Make sure you submitted the form correctly.";
+    }
+
+    function copyText() {
+      navigator.clipboard.writeText(outputBox.textContent)
+        .then(() => {
+          alert("Copied! Now paste it into Bucketey's DMs 💗");
+        });
+    }
+  </script>
+
+</body>
+</html>
