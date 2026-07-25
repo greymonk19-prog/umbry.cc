@@ -38,6 +38,27 @@
       box-shadow: 0 12px 24px rgba(255, 143, 184, 0.5);
     }
 
+    /* PRICING BUTTON (TOP LEFT) */
+    .pricing-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #ffb3d6, #ff8fb8);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 8px 18px rgba(255, 143, 184, 0.4);
+      transition: 0.2s ease;
+    }
+
+    .pricing-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(255, 143, 184, 0.5);
+    }
+
     .container {
       background: rgba(255, 255, 255, 0.9);
       border-radius: 18px;
@@ -184,6 +205,26 @@
       box-shadow: 0 10px 22px rgba(255, 79, 154, 0.5);
     }
 
+    /* TOS BUTTON */
+    .tos-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #ffb3d6, #ff8fb8);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 8px 18px rgba(255, 143, 184, 0.4);
+      transition: 0.2s ease;
+    }
+
+    .tos-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(255, 143, 184, 0.5);
+    }
+
     .char-count {
       font-size: 0.75rem;
       color: #777;
@@ -196,6 +237,9 @@
 
   <!-- SHOWCASE BUTTON -->
   <a class="showcase-btn" href="https://umbry.cc/showcase">showcase</a>
+
+  <!-- PRICING BUTTON -->
+  <a class="pricing-btn" href="https://umbry.cc/pricing">pricing</a>
 
   <div class="container">
 
@@ -286,6 +330,10 @@
     </div>
 
     <button class="submit-btn" onclick="submitForm()">send commission request ✨</button>
+
+    <!-- TOS BUTTON -->
+    <a class="tos-btn" href="https://umbry.cc/tos">terms of service</a>
+
   </div>
 
   <script>
