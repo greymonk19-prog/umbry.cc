@@ -17,7 +17,6 @@
       justify-content: center;
     }
 
-    /* SHOWCASE BUTTON */
     .showcase-btn {
       position: fixed;
       top: 20px;
@@ -38,7 +37,6 @@
       box-shadow: 0 12px 24px rgba(255, 143, 184, 0.5);
     }
 
-    /* PRICING BUTTON (TOP LEFT) */
     .pricing-btn {
       position: fixed;
       top: 20px;
@@ -205,7 +203,6 @@
       box-shadow: 0 10px 22px rgba(255, 79, 154, 0.5);
     }
 
-    /* TOS BUTTON */
     .tos-btn {
       display: inline-block;
       margin-top: 15px;
@@ -235,22 +232,18 @@
 </head>
 <body>
 
-  <!-- SHOWCASE BUTTON -->
   <a class="showcase-btn" href="https://umbry.cc/showcase">showcase</a>
 
-  <!-- PRICING BUTTON -->
   <a class="pricing-btn" href="https://umbry.cc/pricing">pricing</a>
 
   <div class="container">
 
-    <!-- LOTUS IMAGE -->
     <img class="lotus" src="https://png.pngtree.com/png-vector/20260510/ourmid/pngtree-pink-lotus-flower-in-full-bloom-with-delicate-petals-png-image_19273100.webp" alt="lotus">
 
     <div class="pill">✨ order your dream gfx ✨</div>
     <h1 class="title">rosé’s gfx commissions</h1>
     <p class="subtitle">this is where you order my commissions — be as detailed and creative as you want! 🌸</p>
 
-    <!-- TYPE -->
     <div class="section-title">commission type</div>
     <div class="question">
       <span class="question-label">Advanced or Basic?</span>
@@ -266,7 +259,6 @@
       </div>
     </div>
 
-    <!-- CONTACT -->
     <div class="section-title">contact info</div>
     <div class="row">
       <div class="question">
@@ -280,7 +272,6 @@
       </div>
     </div>
 
-    <!-- VISUAL -->
     <div class="section-title">visual details</div>
 
     <div class="question">
@@ -303,7 +294,6 @@
       <input type="text" id="background">
     </div>
 
-    <!-- EXTRA -->
     <div class="section-title">extra info</div>
 
     <div class="question">
@@ -331,13 +321,11 @@
 
     <button class="submit-btn" onclick="submitForm()">send commission request ✨</button>
 
-    <!-- TOS BUTTON -->
     <a class="tos-btn" href="https://umbry.cc/tos">terms of service</a>
 
   </div>
 
   <script>
-    // character counter
     const details = document.getElementById("details");
     const charCount = document.getElementById("char-count");
 
@@ -345,7 +333,6 @@
       charCount.textContent = `${details.value.length} / ${details.maxLength} characters`;
     });
 
-    // submit + redirect
     function submitForm() {
       const type = document.querySelector('input[name="type"]:checked')?.value || "Not specified";
       const discord = document.getElementById("discord").value;
